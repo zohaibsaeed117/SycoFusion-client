@@ -1,10 +1,10 @@
 import Navbar from "@/components/Navbar";
-
+import Login from "@/components/Login";
 
 export default function () {
   return (
     <div>
-      <h1>Login</h1>
+      <Login />
       </div>
   )
 }

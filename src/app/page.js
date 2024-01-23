@@ -6,10 +6,8 @@ import Post from "@/components/Post";
 
 export default function () {
   return (
-    <>
-      {/* <Login /> */}
-      {/* <Signup /> */}
-      <Post />
-    </>
+    <div>
+      <h1>Homepage</h1>
+    </div>
   )
 }

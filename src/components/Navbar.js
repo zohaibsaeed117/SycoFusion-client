@@ -1,8 +1,76 @@
+"use client"
 import Link from "next/link";
-import React from "react";
+import React, {useState, useEffect} from "react";
+import Image from "next/image";
+import {useUserStore} from '../store/store';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
+  const { isAlert, alertMsg, alertType, setIsAlert, setAlertMsg, Username, setAlertType, setIsLogin, isLogin, setUsername, setFirstName, setLastName, setAvatar } = useUserStore();
+
+  const tokenVerification = async()=> {
+    let key = process.env.NEXT_PUBLIC_JWT_TOKEN;
+ 
+    var token = localStorage.getItem("sycofusion_token")
+    if (token != null) {
+      var verification = await jwt.decode(token, key);
+      // console.log(verification)
+
+      if (verification != null) {
+        setIsLogin(true)
+        setUsername(verification.username)
+        setFirstName(verification.firstName)
+        setLastName(verification.lastName)
+        setAvatar(verification.avatar)
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    if(isAlert) {
+     if (alertType == "success") {
+       toast.success(alertMsg, {
+         position: "bottom-right",
+         autoClose: 3000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "dark",
+         });
+     }
+     else if (alertType == "error") {
+       toast.error(alertMsg, {
+         position: "bottom-right",
+         autoClose: 3000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "dark",
+         });
+     }
+     setIsAlert(false)
+    }
+   }, [isAlert])
   return (
+    <>
+     <ToastContainer
+position="bottom-right"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
     <div>
       <div className="navbar bg-base-100">
         <div className="navbar-start">
@@ -44,12 +112,13 @@ const Navbar = () => {
 
             </ul>
           </div>
-          <Link href={"/"} className="btn btn-ghost text-xl">SycoFusion</Link>
+          <Link href={"/"} className="btn btn-ghost text-xl"><Image width={50} height={50} src={"/logo.png"} /></Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
           <li>
-                <Link href={"/"}>Home</Link>
+          <Link href={"/"}>Home</Link>
+                
               </li>
               <li>
                 <Link href={"/posts"}>Feed</Link>
@@ -68,9 +137,27 @@ const Navbar = () => {
         <div className="navbar-end">
           <Link href={"/login"} className="btn btn-primary">Login</Link>
           <Link href={"/signup"} className="mx-2 btn btn-primary">Sign Up</Link>
+
+          <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+          <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        </div>
+      </div>
+      <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+        <li>
+          <a className="justify-between">
+            Welcome, {Username}
+          </a>
+        </li>
+        <li><a>Settings</a></li>
+        <li><a>Logout</a></li>
+      </ul>
+    </div>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

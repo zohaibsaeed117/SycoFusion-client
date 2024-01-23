@@ -11,7 +11,7 @@ const handler = async (req, res) => {
 
         if (user && (await bcrypt.compare(rPassword, user.password))) {
             var token = jwt.sign({username: user.username, password: user.password, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar}, process.env.NEXT_PUBLIC_JWT_TOKEN);
-            return res.status(200).json({firstName:user.firstName, lastName:user.lastName, avatar: user.avatar, message: "User Logged in", type:"success", token: token})
+            return res.status(200).json({username: user.username, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar, message: "User Logged in", type:"success", token: token})
 
         }
         else {
