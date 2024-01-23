@@ -6,7 +6,12 @@ import Post from "@/components/Post";
 
 export default function () {
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh'
+    }}>
       <h1>Homepage</h1>
     </div>
   )

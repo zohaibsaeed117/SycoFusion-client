@@ -1,8 +1,9 @@
 import { Inter } from "next/font/google";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Posts - SycoFusion",
+  title: "Add a Post - SycoFusion",
   description: "Welcome to SycoFusion",
 };
 
