@@ -1,13 +1,38 @@
 "use client"
 import React, { useState } from 'react'
+import {useUserStore} from '@/store/store';
 
 const Signup = () => {
 
+    
+    const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setFirstName, setLastName, setUsername, setAvatar, Username } = useUserStore();
+    const createAccount = () => {
+
+        
+        fetch(`/api/auth/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+          setAlertMsg(data.message);
+          setIsAlert(true);
+          setAlertType(data.type);
+          
+    
+    
+        })
+      }
 
     const [user, setUser] = useState({
-        name: "",
+        username: "",
         email: "",
-        DOB: "",
+        firstName: "",
+        lastName: "",
+        age: 0,
         password: ""
     })
 
@@ -23,25 +48,33 @@ const Signup = () => {
 
 
     return (
-        <div className='flex flex-col gap-y-8 h-[100vh] justify-center items-center'>
+        <div className='flex flex-col gap-y-8 h-[140vh] justify-center items-center'>
             <h1 className="text-4xl font-semibold">Create an account</h1>
             <label htmlFor="name" className='flex flex-col gap-y-2 w-[20rem]'>
-                Enter Your Name
-                <input type="name" className="input input-bordered input-success" id="name" placeholder='e.g. John Walker' onChange={handleChange} />
+                Enter Your Username
+                <input type="name" className="input input-bordered input-success" id="username" placeholder='e.g. John' onChange={handleChange} />
+            </label>
+            <label htmlFor="name" className='flex flex-col gap-y-2 w-[20rem]'>
+                Enter Your First Name
+                <input type="name" className="input input-bordered input-success" id="firstName" placeholder='e.g. John' onChange={handleChange} />
+            </label>
+            <label htmlFor="name" className='flex flex-col gap-y-2 w-[20rem]'>
+                Enter Your Last Name
+                <input type="name" className="input input-bordered input-success" id="lastName" placeholder='e.g. Walker' onChange={handleChange} />
             </label>
             <label htmlFor="email" className='flex flex-col gap-y-2 w-[20rem]'>
                 Enter Your Email
                 <input type="name" className="input input-bordered input-success" id="email" placeholder='e.g. john@gmail.com' onChange={handleChange} />
             </label>
             <label htmlFor="DOB" className='flex flex-col gap-y-2 w-[20rem]'>
-                Enter Your DOB
-                <input type="date" className="input input-bordered input-success" id="DOB" placeholder='Enter your Name' onChange={handleChange} />
+                Enter Your Age
+                <input type="number" className="input input-bordered input-success" id="age" placeholder='Enter your Age' onChange={handleChange} />
             </label>
             <label htmlFor="password" className='flex flex-col gap-y-2 w-[20rem]'>
                 Enter Your Password
-                <input type="password" className="input input-bordered input-success" id="name" placeholder='Enter your Password' onChange={handleChange} />
+                <input type="password" className="input input-bordered input-success" id="password" placeholder='Enter your Password' onChange={handleChange} />
             </label>
-            <button className="btn btn-active btn-success text-xl text-white">Signup</button>
+            <button onClick={createAccount} className="btn btn-active btn-success text-xl text-white">Signup</button>
         </div>
     )
 }

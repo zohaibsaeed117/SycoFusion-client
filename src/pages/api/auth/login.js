@@ -7,8 +7,7 @@ const handler = async (req, res) => {
         const rUsername = req.body.username;
         const rPassword = req.body.password;
         let user = await User.findOne({username: rUsername})
-        console.log(user)
-
+       
         if (user && (await bcrypt.compare(rPassword, user.password))) {
             var token = jwt.sign({username: user.username, password: user.password, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar}, process.env.NEXT_PUBLIC_JWT_TOKEN);
             return res.status(200).json({username: user.username, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar, message: "User Logged in", type:"success", token: token})

@@ -4,6 +4,8 @@ import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import {useUserStore} from '../store/store';
 import { ToastContainer, toast } from 'react-toastify';
+
+var jwt = require('jsonwebtoken');
 import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
@@ -26,6 +28,11 @@ const Navbar = () => {
       }
     }
   }
+
+  useEffect(() => {
+    tokenVerification();
+  }, [])
+  
 
 
   useEffect(() => {

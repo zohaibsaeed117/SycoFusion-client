@@ -1,10 +1,9 @@
 import Navbar from "@/components/Navbar";
+import Signup from "@/components/Signup";
 
 
 export default function () {
   return (
-    <div>
-      <h1>Sign Up</h1>
-      </div>
+    <Signup/>
   )
 }
