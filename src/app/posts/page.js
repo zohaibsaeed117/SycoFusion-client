@@ -1,5 +1,5 @@
 "use client";
-import PostFeedView from '@/components/PostFeedView'
+import PostFeedView from '@/components/Post'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
