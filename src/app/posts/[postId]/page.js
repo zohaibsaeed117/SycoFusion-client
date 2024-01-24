@@ -9,7 +9,7 @@ import "../../../css/globals.css";
 
 import { useUserStore } from "@/store/store";
 
-import PostFeedView from "@/components/PostFeedView";
+import PostFeedView from "@/components/Post";
 import { useRouter } from "next/navigation";
 var jwt = require('jsonwebtoken');
 export default function Home({ params }) {

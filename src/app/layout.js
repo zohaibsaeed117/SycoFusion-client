@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Navbar/>
-        {/* <NextTopLoader /> */}
+        <NextTopLoader />
         {/* <NextTopLoader
   color="#2299DD"
   initialPosition={0.08}

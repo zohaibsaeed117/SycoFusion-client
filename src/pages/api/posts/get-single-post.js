@@ -8,7 +8,7 @@ const handler = async (request, response) => {
     var id = new ObjectId(postId);
 
     let post = await Post.find({ _id: id })
-
+    console.log(post)
     return response.status(200).json({post: post})
       
    

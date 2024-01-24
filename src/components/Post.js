@@ -44,16 +44,16 @@ return (
                     <p>100</p>
                 </button> */}
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                <button className="btn border-none shadow-none bg-transparent" onClick={() => document.getElementById('my_modal_3').showModal()}><FaMessage />
+                <button className="btn border-none shadow-none bg-transparent" onClick={() => document.getElementById(`modal_${postId}`).showModal()}><FaMessage />
                     <p>Comments</p>
-                    <p>100</p></button>
-                <dialog id="my_modal_3" className="modal">
-                    <PostModal />
+                    <p></p></button>
+                <dialog id={`modal_${postId}`} className="modal">
+                    <PostModal postId={postId} />
                 </dialog>
                 <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
                     <FaShare />
                     <p>Share</p>
-                    <p>100</p>
+                    <p></p>
                 </button>
             </div>
         </div >
