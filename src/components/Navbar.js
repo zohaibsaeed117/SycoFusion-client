@@ -31,7 +31,7 @@ const Navbar = () => {
     var token = localStorage.getItem("sycofusion_token");
     if (token != null) {
       var verification = await jwt.decode(token, key);
-      // console.log(verification)
+      console.log(verification)
 
       if (verification != null) {
         setIsLogin(true);

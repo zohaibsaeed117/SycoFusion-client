@@ -1,7 +1,7 @@
 import Login from "@/components/Login";
 import Navbar from "../components/Navbar";
 import Signup from "@/components/Signup";
-import Post from "@/components/Post";
+import Post from "@/components/PostFeedView";
 
 
 export default function () {

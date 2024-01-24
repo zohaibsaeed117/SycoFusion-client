@@ -1,0 +1,87 @@
+[33mcommit fbcc099260e688f015b36222c25a6a740d2ccd56[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Hussnain Ahmad <hussnainahmad1606@gmail.com>
+Date:   Wed Jan 24 03:26:15 2024 +0500
+
+    New Post page, add footer and set icons
+
+[33mcommit 417ad4d26be0c2b49d138bb58f1fc08ffa00093a[m
+Author: Hussnain Ahmad <hussnainahmad1606@gmail.com>
+Date:   Wed Jan 24 01:39:14 2024 +0500
+
+    Create Account done
+
+[33mcommit 0abfbe69ccf7576ffcef905b2ede30cb803b97eb[m
+Merge: 6397262 788b874
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Wed Jan 24 01:25:17 2024 +0500
+
+    Resolved Conflicts
+
+[33mcommit 6397262859fc700fca3b65f24362707a75d8aa32[m
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Wed Jan 24 01:19:18 2024 +0500
+
+    Added component of Post
+
+[33mcommit 788b874b983df2d9ebf7f2b84607612e53a891e8[m
+Merge: b8388a5 99ce54c
+Author: Hussnain Ahmad <hussnainahmad1606@gmail.com>
+Date:   Wed Jan 24 01:17:47 2024 +0500
+
+    Fix conflicts
+
+[33mcommit b8388a5547a9be29d351a534277c9a71751796a7[m
+Author: Hussnain Ahmad <hussnainahmad1606@gmail.com>
+Date:   Wed Jan 24 01:16:08 2024 +0500
+
+    Login Done
+
+[33mcommit 99ce54ce16ea69cd340d26053405864973a42fdf[m
+Merge: 537866c 53e1153
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Wed Jan 24 00:11:13 2024 +0500
+
+    Merge branch 'main' of https://github.com/PsychoZexta/SycoFusion
+
+[33mcommit 537866c220d5918a795c3841a9e49197ccefe560[m
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Wed Jan 24 00:11:03 2024 +0500
+
+    Added signup component
+
+[33mcommit 53e11530b74645baca502b8138847bf912943d50[m
+Author: Hussnain Ahmad <hussnainahmad1606@gmail.com>
+Date:   Tue Jan 23 23:53:12 2024 +0500
+
+    db connection, state management and Auth backend done
+
+[33mcommit dd22b6918b09a6a2b6efd706e28da2d2d4bb5712[m
+Merge: 881c4cb 55e8f14
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Tue Jan 23 23:34:03 2024 +0500
+
+    Resolved conflicts
+
+[33mcommit 881c4cb14adbf6a55627258f707fdd76b4d6f30a[m
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Tue Jan 23 23:31:40 2024 +0500
+
+    Added Login page
+
+[33mcommit 55e8f1441d3eea3ceed303a6aa5b56dbf359397c[m
+Author: Hussnain Ahmad <hussnainahmad1606@gmail.com>
+Date:   Tue Jan 23 23:26:55 2024 +0500
+
+    Add Routing
+
+[33mcommit 1f6bb3e5f0cec0411c44f4d368e86c44301b4d4f[m
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Tue Jan 23 22:52:59 2024 +0500
+
+    Added daisy ui
+
+[33mcommit 0950f8a2472b8bcace6edea585aea9d00f4f46bd[m
+Author: Zohaib Saeed <zohaib.saeed1259@gmail.com>
+Date:   Tue Jan 23 17:22:53 2024 +0500
+
+    Initial commit from Create Next App
