@@ -9,6 +9,17 @@ import { useUserStore } from '@/store/store';
 const Post = ({ postId, createdAt, username, caption, likes, postType, attachments }) => {
     const { Username, UserId } = useUserStore();
     const [isFollow, setIsFollow] = useState(false);
+    const { setIsAlert, setAlertMsg, setAlertType } = useUserStore();
+    const [isLiked, setIsLiked] = useState(null);
+
+    const [totalLikes, setTotalLikes] = useState(likes.length);
+
+
+    const isLikePost = () => {
+        const liked = likes.includes(Username);
+        setIsLiked(liked);
+    }
+
     const checkFollow = async () => {
         const response = await fetch(`/api/users/getUserId`, {
             method: "POST",
@@ -119,10 +130,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
             setIsFollow(false);
         }
     }
-    const { setIsAlert, setAlertMsg, setAlertType } = useUserStore();
-
-
-    const [totalLikes, setTotalLikes] = useState(likes.length);
+    
 
     const handleLike = () => {
         console.log("Liking Post")
@@ -148,12 +156,17 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                     console.log("Post Liked")
 
                 }
+                else {
+                    setTotalLikes(totalLikes - 1)
+                    console.log("Post Unliked")
+                }
 
             })
     }
 
     useEffect(() => {
         checkFollow();
+        isLikePost();
     }, [])
 
     return (
@@ -200,9 +213,11 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 }
             </Splide>
             <div className='flex items-center justify-evenly py-2'>
-                <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
+                <button text onClick={handleLike} className={`btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg`}>
                     <FaThumbsUp />
-                    <p>Like</p>
+                    <p style={{
+                        color: isLiked?'blue':""
+                    }}>Like</p>
                     <p>({totalLikes})</p>
                 </button>
                 <a href={`/posts/${postId}`} className="btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg"><FaMessage />

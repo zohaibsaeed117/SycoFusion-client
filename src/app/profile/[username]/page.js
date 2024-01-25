@@ -14,11 +14,19 @@ function page({params}) {
     const {Username} = useUserStore();
     const [userData, setUserData] = useState({});
     const [followers, setFollowers] = useState(0)
+    const [fullName, setFullName] = useState("")
     const [following, setFollowing] = useState(0);
     const [posts, setPosts] = useState([]);
     const [skills, setSkills] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+    const [github, setGithub] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [linkedin, setLinkedin] = useState("");
+    const [youtube, setYoutube] = useState("");
+  
     const getUserPosts = async() => {
+      setIsLoading(true);
       await fetch(`/api/posts/getProfilePosts`,{
         method: "POST",
         headers: {
@@ -32,10 +40,10 @@ function page({params}) {
         console.log(data)
         if (data.type == "success") {
           
-         setPosts(data.posts)
-         console.log(data)
-         setIsLoading(false)
-        
+          setPosts(data.posts)
+          console.log(data)
+          setIsLoading(false)
+          
         }
       })
     }
@@ -60,6 +68,11 @@ function page({params}) {
           const SkillsArr = skills.split(",");
           setSkills(SkillsArr);
           setFollowing(data.data.user.following.length);
+          setFullName(data.data.user.firstName+ " " + data.data.user.lastName)
+          setGithub(data.data.user.socialLinks[0]?.url);
+          setTwitter(data.data.user.socialLinks[1]?.url);
+          setLinkedin(data.data.user.socialLinks[2]?.url);
+          setYoutube(data.data.user.socialLinks[3]?.url);
          setIsLoading(false)
         
         }
@@ -67,7 +80,6 @@ function page({params}) {
       
     }
 
-    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
       getUserData();
@@ -88,7 +100,7 @@ function page({params}) {
     
     
        <div className='my-10 flex justify-around items-center'>
-         <ProfileView username={username} followers={followers} following={following} posts={userData.posts}/>
+         <ProfileView username={username} fullName={fullName} followers={followers} following={following} posts={userData.posts}/>
           
        </div>
     
@@ -128,7 +140,16 @@ function page({params}) {
         <h1 className='my-10 text-3xl font-bold'>Posts 📝</h1>
         <Link href={`/profile/${username}/posts`}>Show All</Link>
         </div>
+
+        {
+
+        }
     
+    {
+      isLoading==false&&posts.length==0?(
+        <h1 className='text-center font-bold text-2xl'>No Posts to show</h1>
+      ):null
+    }
         <div className='flex justify-center items-center flex-col'>
         {
           posts.map((project, index) => {
@@ -164,10 +185,10 @@ function page({params}) {
     
         <div className='my-10 flex justify-around items-center text-5xl'>
         
-            <a><AiFillGithub className='social-icon github'/></a>
-          <a><BsTwitter className='social-icon twitter'/></a>
-          <a><BsLinkedin className='social-icon linkedin'/></a>
-          <a><GrYoutube className='social-icon youtube'/></a>
+            <a href={github} target='_blank'><AiFillGithub className='social-icon github'/></a>
+          <a href={twitter} target='_blank'><BsTwitter className='social-icon twitter'/></a>
+          <a href={linkedin} target='_blank'><BsLinkedin className='social-icon linkedin'/></a>
+          <a href={youtube} target='_blank'><GrYoutube className='social-icon youtube'/></a>
        
         
         </div>
