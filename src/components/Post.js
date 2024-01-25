@@ -181,9 +181,9 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                     </div>
                 </div>
 
-                <div className='order-3 badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[0.6rem]'>{postType}</div>
-                
-                <div className='order-2 ml-[-6rem] flex items-center justify-end sm:order-3'>
+                <div className='order-3 badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[-7rem]'>{postType}</div>
+
+                <div className='order-2 flex items-center justify-end sm:order-3'>
                     {
                         isFollow ? (
                             <button onClick={removeFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>
@@ -195,7 +195,14 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                         <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-0 sm:m-1"><span className=''><FaEllipsis /></span></div>
                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-0 shadow bg-base-100 rounded-box w-52">
                             <li><button>Copy Post URL</button></li>
-                            
+                            {
+                                username == Username ? (
+                                    <>
+                                        <li><button>Edit</button></li>
+                                        <li><button className='text-red-500'>Delete</button></li>
+                                    </>
+                                ) : null
+                            }
                         </ul>
                     </div>
                 </div>

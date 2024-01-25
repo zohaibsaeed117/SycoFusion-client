@@ -376,12 +376,11 @@ const SinglePost = ({ postId }) => {
 
                         return (
                             <>
-                                <Comment replyToComment={() => {
+                                <Comment username={comment.username} replyToComment={() => {
                                     replyToComment(comment);
                                 }} deleteComment={() => {
                                     deleteComment(comment._id)
                                 }} key={comment._id} comment={comment} />
-
                                 {renderReplies(comment._id)}
                             </>
 
