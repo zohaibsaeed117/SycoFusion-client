@@ -15,7 +15,7 @@ function NewPost() {
   const router = useRouter();
   const [caption, setCaption] = useState("");
   const [title, setTitle] = useState("");
-  const [postType, setPostType] = useState("");
+  const [postType, setPostType] = useState("Daily Post");
   const { theme,isAlert, alertMsg, alertType, setIsAlert, setAlertMsg, setAlertType, setTheme, setIsLogin, isLogin, setFirstName, setLastName, setAvatar, Username, attachments,resetAttachments,uploadProgressCaption, attachmentProgress } = useUserStore();
 
 
@@ -71,7 +71,7 @@ function NewPost() {
     setPostType(e.target.value);
     console.log(e.target.value)
   }} className="select select-ghost w-full max-w-xs">
-    <option value={"Daily"}>Daily Post</option>
+    <option value={"Daily Post"}>Daily Post</option>
     <option value={"Achievement"}>Achievement</option>
     <option value={"Project"}>Project</option>
   </select>

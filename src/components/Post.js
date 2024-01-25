@@ -81,7 +81,45 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
             setIsFollow(false);
         }
     }
-    const { setIsAlert, setAlertMsg, setAlertType } = useUserStore();
+    const removeFollower = async () => {
+
+        // finding logged in user id
+        const response = await fetch(`/api/users/getUserId`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: username })
+        
+        })
+        const data = await response.json();
+        console.log(data)
+        const userId = data.user._id;
+
+        
+        const res = await fetch('/api/followers/unfollow-user', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userToFollow: userId,
+                followingUser: UserId
+            })
+        })
+        const result = await res.json();
+        console.log(result);
+        setIsAlert(true);
+        setAlertMsg(result.message);
+        setAlertType(result.type);
+        if (result.type == "success") {
+            setIsFollow(true);
+        }
+        else {
+            setIsFollow(false);
+        }
+    }
+    const {setIsAlert, setAlertMsg, setAlertType } = useUserStore();
 
 
     const [totalLikes, setTotalLikes] = useState(likes.length);
