@@ -57,7 +57,7 @@ const Comment = ({comment, deleteComment, replyToComment}) => {
                 }} className="chat-header">
                    {comment.username}
                     <time style={{
-                    display: isEdit? "none" : "block"
+                    display: isEdit? "none" : "inline-block"
                 }} className="mx-2 text-xs opacity-70">{format(comment.createdAt)}</time>
                 </div>
                <div style={{

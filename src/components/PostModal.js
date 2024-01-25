@@ -5,7 +5,7 @@ import Comment from './Comment';
 import { useUserStore } from '@/store/store';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-const PostModal = ({ postId }) => {
+const PostModal = ({ postId, handleLike, totalLikes}) => {
     const { Username, setIsAlert, setAlertMsg, setAlertType } = useUserStore();
     //createdAt, Username, caption, likes, postType, attachments
     const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +26,8 @@ const PostModal = ({ postId }) => {
     }
 
 
-    const deleteComment = async (ID) => {
-        console.log("Deleting Comment")
+    const deleteComment = async(ID) => {
+        console.log("Deleting Comment");
         const res = await fetch('/api/comments/delete-comment', {
             method: "POST",
             headers: {
@@ -35,8 +35,8 @@ const PostModal = ({ postId }) => {
             },
             body: JSON.stringify({ commentId: ID })
         })
-        const result = await res.json()
-        console.log(result)
+        const result = await res.json();
+        console.log(result);
         setIsAlert(true);
         setAlertMsg(result.message);
         setAlertType(result.type);
@@ -70,7 +70,6 @@ const PostModal = ({ postId }) => {
 
 
     const getComments = async () => {
-        console.log("Getting Comments")
         const res = await fetch('/api/comments/get-comments', {
             method: "POST",
             headers: {
@@ -79,7 +78,7 @@ const PostModal = ({ postId }) => {
             body: JSON.stringify({ postId: postId })
         })
         const result = await res.json()
-        console.log(result)
+     
         if (result.type == "error") {
             setIsAlert(true);
             setAlertMsg(result.message);
@@ -142,15 +141,15 @@ const PostModal = ({ postId }) => {
                 throw new Error('Failed to fetch post data');
             }
 
-            const result = await response.json();
-            console.log(result);
-            setPostData(result.post[0]);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        } finally {
-            getComments();
-        }
-    };
+      const result = await response.json();
+    //   console.log(result);
+      setPostData(result.post[0]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      getComments();
+    }
+  };
 
 
 
@@ -207,10 +206,10 @@ const PostModal = ({ postId }) => {
             <div className='px-4 my-2 text-sm sm:text-lg'>{postData.caption}</div>
 
             <div className='flex items-center justify-evenly py-2'>
-                <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
+                <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
-                    <p>({postData?.likes?.length})</p>
+                    <p>({totalLikes})</p>
                 </button>
                 <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
                     <FaMessage />
@@ -238,14 +237,14 @@ const PostModal = ({ postId }) => {
                 <button onClick={addComment} className="btn join-item rounded-r-full btn-primary"><FaPaperPlane /></button>
             </div>
             <div className='my-2'>
-                {
-                    comments.map((comment, index) => {
-                        console.log(comment.message, ": ", comment.isReply)
-
-
-                        return (
-                            <>
-                                <Comment replyToComment={() => {
+               {
+                comments.map((comment, index)=> {
+                  console.log(comment.message, ": ", comment.isReply)
+                  
+                      
+                            return (
+                                <>
+                                <Comment replyToComment={()=> {
                                     replyToComment(comment);
                                 }} deleteComment={() => {
                                     deleteComment(comment._id)

@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-.icon {
-  cursor: pointer;
+.social-icon {
+  cursor: pointer !important;
+
+}
+
+
+.github:hover {
+  color: #333;
+}
+
+.twitter:hover {
+  color: #00acee;
+}
+
+.linkedin:hover {
+  color: #0e76a8;
+}
+
+.youtube:hover {
+  color: #FF0000;
+}
+
+.medium:hover {
+  color: white;
+}
+.instagram:hover {
+  color: 	#cd486b ;
 }

@@ -21,7 +21,11 @@ try{
             password: hashedPassword,
             isBlocked: false,
             isAdmin: false,
-            avatar: ""
+            avatar: "",
+            socialLinks: [],
+            followers: [],
+            following: [],
+            blockedUsers: []
         })
     
         await user.save();

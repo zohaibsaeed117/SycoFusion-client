@@ -7,7 +7,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setFirstName, setLastName, setUsername, setAvatar, Username } = useUserStore();
+    const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setFirstName, setLastName, setUsername, setAvatar, Username, setUserId } = useUserStore();
 
 
     const login = () => {
@@ -35,6 +35,7 @@ const Login = () => {
             setLastName(data.lastName)
             setAvatar(data.avatar)
             setUsername(data.username)
+            setUserId(data.userId)
             localStorage.setItem("sycofusion_token", data.token);
             console.log(`User: ${data.username} - ${Username}`)
           }

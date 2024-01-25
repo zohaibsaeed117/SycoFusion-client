@@ -23,6 +23,8 @@ const Navbar = () => {
     setFirstName,
     setLastName,
     setAvatar,
+    setUserId,
+    UserId
   } = useUserStore();
 
   const tokenVerification = async () => {
@@ -39,6 +41,7 @@ const Navbar = () => {
         setFirstName(verification.firstName);
         setLastName(verification.lastName);
         setAvatar(verification.avatar);
+        setUserId(verification.userId)
       }
     }
   };
@@ -192,10 +195,10 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                   >
                     <li>
-                      <a className="justify-between">Welcome, {Username}</a>
+                      <a className="justify-between">Welcome, {Username} - {UserId}</a>
                     </li>
                     <li>
-                      <a>Settings</a>
+                      <Link href={`/profile/${Username}`}>My Profile</Link>
                     </li>
                     <li>
                       <a onClick={logout}>Logout</a>
