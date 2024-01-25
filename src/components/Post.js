@@ -17,6 +17,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
 
     const isLikePost = () => {
         const liked = likes.includes(Username);
+        console.log(likes.includes(Username));
         setIsLiked(liked);
     }
 
@@ -154,11 +155,13 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 if (data.liked) {
                     setTotalLikes(totalLikes + 1)
                     console.log("Post Liked")
+                    setIsLiked(true);
 
                 }
                 else {
                     setTotalLikes(totalLikes - 1)
                     console.log("Post Unliked")
+                    setIsLiked(false);
                 }
 
             })
@@ -221,11 +224,15 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
             </Splide>
             <div className='flex items-center justify-evenly py-2'>
                 <button text onClick={handleLike} className={`btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg`}>
-                    <FaThumbsUp />
+                    <FaThumbsUp style={{
+                        color: isLiked?'#4a00ff':""
+                    }}/>
                     <p style={{
-                        color: isLiked?'blue':""
+                        color: isLiked?'#4a00ff':""
                     }}>Like</p>
-                    <p>({totalLikes})</p>
+                    <p style={{
+                        color: isLiked?'#4a00ff':""
+                    }}>({totalLikes})</p>
                 </button>
                 <a href={`/posts/${postId}`} className="btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg"><FaMessage />
                     <p>Comments</p>

@@ -65,7 +65,12 @@ export default function Home({ params }) {
 
 
   const [userData, setUserData] = useState({});
+  const changeTheme = (e) => {
+ 
 
+    localStorage.setItem("logfusion-theme", e.target.value);
+    document.documentElement.setAttribute("data-theme", e.target.value);
+  }
   const getUserData = async () => {
     const data = {
       username: Username,
@@ -208,16 +213,18 @@ export default function Home({ params }) {
   }, []);
 
   return (
-    <>
+    <div className="my-10 flex justify-center items-center">
       <div
         style={{
           width: "90vw",
+          borderRadius: 20
         }}
         className="ml-5 bg-gray-800 flex justify-between flex-col md:flex-row"
-      >
+        >
         <div
           style={{
             width: "90vw",
+            borderRadius: 20
           }}
           className="bg-gray-700"
         >
@@ -445,6 +452,21 @@ export default function Home({ params }) {
               />
             </div>
           </div>
+
+          <div className="flex justify-around items-center">
+            <div>
+              <h1 className="text-bold text-white text-1xl">Theme</h1>
+            </div>
+
+            <div>
+              <select defaultValue={"light"} onChange={changeTheme} className="select select-bordered w-full max-w-xs">
+                <option value={"light"}>
+                  Light
+                </option>
+                <option value={"dark"}>Dark</option>
+              </select>
+            </div>
+          </div>
           <center>
 
 
@@ -467,6 +489,6 @@ export default function Home({ params }) {
           ></div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
