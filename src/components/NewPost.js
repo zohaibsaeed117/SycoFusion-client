@@ -52,7 +52,7 @@ function NewPost() {
 
         if (data.type == "success") {
 
-          // router.push(`/posts/${data.id}`)
+          router.push(`/posts/${data.id}`)
 
         }
   
