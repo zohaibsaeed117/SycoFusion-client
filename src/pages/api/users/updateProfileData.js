@@ -11,12 +11,13 @@ const handler = async (request, response) => {
     const role = request.body.role;
     const skills = request.body.skills;
     const avatar = request.body.avatar;
+    const socialLinks = request.body.socialLinks;
 
     //converting string to array
     const skillsArr = skills.split(",");
 
    try {
-    let user = await User.updateOne({username:username}, { $set: {firstName:firstName, lastName: lastName, age: age,email:email,role:role, skills:skills, avatar: avatar}})
+    let user = await User.updateOne({username:username}, { $set: {firstName:firstName, lastName: lastName, age: age,email:email,role:role, skills:skills, avatar: avatar,socialLinks:socialLinks }})
     var token = jwt.sign({username: username, firstName:firstName, lastName:lastName, avatar: avatar}, process.env.NEXT_PUBLIC_JWT_TOKEN);
     return response.status(200).json({type: "success", message: "Profile Updated Successfully", token: token})
     

@@ -47,7 +47,10 @@ const SinglePost = ({ postId }) => {
                 if (data.liked) {
                     setTotalLikes(totalLikes + 1)
                     console.log("Post Liked")
-
+                }
+                else {
+                    setTotalLikes(totalLikes - 1)
+                    console.log("Post Unliked")
                 }
 
             })
@@ -338,7 +341,7 @@ const SinglePost = ({ postId }) => {
                 <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
-                    <p>({postData?.likes?.length})</p>
+                    <p>({totalLikes})</p>
                 </button>
                 <button className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaMessage />

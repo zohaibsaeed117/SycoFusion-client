@@ -69,13 +69,13 @@ export default function Home() {
   
     return (
       <>
-      {/* <div className='flex justify-center items-center'>
+     <div className='flex justify-center items-center'>
       <Link href={"/posts"} className='btn btn-primary mx-2'>For You</Link>
       <Link href={"/posts/following"} className='btn btn-secondary'> Following</Link>
 
-      </div> */}
+      </div>
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className='text-4xl p-10 text-center font-bold my-10'>Latest Posts</h1>
+      <h1 className='text-4xl p-10 text-center font-bold my-10'>Posts by Following</h1>
       
       <div className='flex justify-center items-center flex-col'>
         {

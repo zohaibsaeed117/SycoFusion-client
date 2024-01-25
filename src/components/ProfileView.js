@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import ProfileViewPropCard from './ProfileViewPropCard'
 import {useUserStore} from '@/store/store';
-function ProfileView({username, name, followers, following, posts}) {
+function ProfileView({username, name, followers, following, posts, fullName}) {
 
   const { Username } = useUserStore();
 
@@ -45,7 +45,7 @@ boxShadow: "0px 0px 70px 0px rgba(255,255,255,0.7)"
       <div className='flex justify-around items-center'>
       <h2 style={{
         fontSize: "2rem"
-      }} className="card-title">{Username}</h2>
+      }} className="card-title">{fullName}</h2>
      
       </div>
       
