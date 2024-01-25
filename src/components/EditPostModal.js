@@ -17,11 +17,11 @@ const PostModal = ({PostData}) => {
 
 
 
-    useEffect(() => {
-    }, []);
+  useEffect(() => {
+  }, []);
 
-    return (
-     <>
+  return (
+    <>
 
   <div className="modal-box ">
     <form method="dialog">
