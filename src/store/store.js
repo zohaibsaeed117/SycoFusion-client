@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 export const useUserStore = create((set) => ({
   isLogin: false,
-  Username: "check",
+  Username: "",
   UserId: "",
   email: "",
   avatar: "",

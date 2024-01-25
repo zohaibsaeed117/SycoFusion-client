@@ -5,7 +5,7 @@ import Comment from './Comment';
 import { useUserStore } from '@/store/store';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-const PostModal = ({ postId, handleLike, totalLikes}) => {
+const SinglePost = ({ postId }) => {
     const { Username, setIsAlert, setAlertMsg, setAlertType } = useUserStore();
     //createdAt, Username, caption, likes, postType, attachments
     const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +26,8 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
     }
 
 
-    const deleteComment = async(ID) => {
-        console.log("Deleting Comment");
+    const deleteComment = async (ID) => {
+        console.log("Deleting Comment")
         const res = await fetch('/api/comments/delete-comment', {
             method: "POST",
             headers: {
@@ -35,8 +35,8 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
             },
             body: JSON.stringify({ commentId: ID })
         })
-        const result = await res.json();
-        console.log(result);
+        const result = await res.json()
+        console.log(result)
         setIsAlert(true);
         setAlertMsg(result.message);
         setAlertType(result.type);
@@ -70,6 +70,7 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
 
 
     const getComments = async () => {
+        console.log("Getting Comments")
         const res = await fetch('/api/comments/get-comments', {
             method: "POST",
             headers: {
@@ -78,7 +79,7 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
             body: JSON.stringify({ postId: postId })
         })
         const result = await res.json()
-     
+        console.log(result)
         if (result.type == "error") {
             setIsAlert(true);
             setAlertMsg(result.message);
@@ -141,15 +142,15 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
                 throw new Error('Failed to fetch post data');
             }
 
-      const result = await response.json();
-    //   console.log(result);
-      setPostData(result.post[0]);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      getComments();
-    }
-  };
+            const result = await response.json();
+            console.log(result);
+            setPostData(result.post[0]);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            getComments();
+        }
+    };
 
 
 
@@ -157,8 +158,44 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
         getPostData();
     }, [postId]);
 
+    // const postData = {
+    //     _id: 1,
+    //     username: "Zohaib Saeed",
+    //     createdAt: "Hello",
+    //     postType: "image",
+    //     caption: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos, vitae eaque. Magnam atque recusandae assumenda architecto dicta nesciunt ducimus harum. Dicta non quasi veritatis minus commodi, sapiente facilis voluptatum velit!",
+    //     likes: 50,
+    //     comments: [
+    //         {
+    //             username: "Zohaib Saeed",
+    //             message: "THis is comment",
+    //             isReply: false,
+    //             replyTo: null,
+    //             postId: 1
+    //         },
+    //     ],
+    //     attachments: [
+    //         {
+    //             type: "image",
+    //             url: "./abc.jpg"
+    //         },
+    //         {
+    //             type: "image",
+    //             url: "./abc.jpg"
+    //         },
+    //     ]
+    // }
+    // const comments = postData.comments;
+    // const { isReply,message,replyTo,postIds,userName } = comments;
+    // const isLoading = false;
+    // const addComment=()=>{
+    //     console.log("object")
+    // }
+    // const renderReplies=()=>{
+    //     console.log("object")
+    // }
     return (
-        <div className='modal-box w-11/12 max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
+        <div className='w-[85vw] max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
 
             <header className='flex items-center justify-between m-2'>
                 <div className='flex gap-3'>
@@ -206,10 +243,10 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
             <div className='px-4 my-2 text-sm sm:text-lg'>{postData.caption}</div>
 
             <div className='flex items-center justify-evenly py-2'>
-                <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
+                <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
-                    <p>({totalLikes})</p>
+                    <p>({postData?.likes?.length})</p>
                 </button>
                 <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
                     <FaMessage />
@@ -237,14 +274,14 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
                 <button onClick={addComment} className="btn join-item rounded-r-full btn-primary"><FaPaperPlane /></button>
             </div>
             <div className='my-2'>
-               {
-                comments.map((comment, index)=> {
-                  console.log(comment.message, ": ", comment.isReply)
-                  
-                      
-                            return (
-                                <>
-                                <Comment replyToComment={()=> {
+                {
+                    comments.map((comment, index) => {
+                        console.log(comment.message, ": ", comment.isReply)
+
+
+                        return (
+                            <>
+                                <Comment replyToComment={() => {
                                     replyToComment(comment);
                                 }} deleteComment={() => {
                                     deleteComment(comment._id)
@@ -262,4 +299,6 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
         </div >
     )
 }
-export default PostModal
+
+
+export default SinglePost

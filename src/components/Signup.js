@@ -21,9 +21,6 @@ const Signup = () => {
           setAlertMsg(data.message);
           setIsAlert(true);
           setAlertType(data.type);
-          
-    
-    
         })
       }
 
