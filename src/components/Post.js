@@ -150,9 +150,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
         })
             .then(res => res.json())
             .then(data => {
-                setAlertMsg(data.message);
-                setAlertType(data.type);
-                setIsAlert(true);
+             
                 if (data.liked) {
                     setTotalLikes(totalLikes + 1)
                     console.log("Post Liked")
