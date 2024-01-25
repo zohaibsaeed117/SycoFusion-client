@@ -213,6 +213,23 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                         <li><a>This is option 2</a></li>
                     </ul>
                 </div>
+                <div className='order-3 badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[[0.6rem]rem]'>{postType}</div>
+                <div className='order-2 flex items-center justify-end sm:order-3'>
+                    {
+                        isFollow ? (
+                            <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>
+                        ) : (
+                            <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Follow</button>
+                        )
+                    }
+                    <div className='dropdown dropdown-left'>
+                        <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-0 sm:m-1"><span className=''><FaEllipsis /></span></div>
+                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-0 shadow bg-base-100 rounded-box w-52">
+                            <li><a>This is option 1</a></li>
+                            <li><a>This is option 2</a></li>
+                        </ul>
+                    </div>
+                </div>
             </header>
             <div className='px-4 my-2 text-sm sm:text-lg'>{caption}</div>
             <Splide options={{ arrows: attachments?.length > 1 ? true : false }} className='my-4' aria-label="My Favorite Images">
