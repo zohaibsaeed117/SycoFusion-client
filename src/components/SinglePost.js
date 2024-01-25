@@ -5,6 +5,7 @@ import Comment from './Comment';
 import { useUserStore } from '@/store/store';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import EditPostModal from './EditPostModal'
 const SinglePost = ({ postId }) => {
     const { Username, setIsAlert, setAlertMsg, setAlertType } = useUserStore();
     //createdAt, Username, caption, likes, postType, attachments
@@ -17,7 +18,30 @@ const SinglePost = ({ postId }) => {
     const [isReply, setIsReply] = useState(false);
     const [replyTo, setReplyTo] = useState("");
     const [replyComment, setReplyComment] = useState("");
-
+    const editPost = () => {
+        setIsLoading(true);
+        const data = {
+            postId: postId,
+            caption: message
+        }
+        fetch(`/api/posts/edit-post`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setAlertMsg(data.message);
+                setAlertType(data.type);
+                setIsAlert(true);
+                if (data.type == "success") {
+                    setIsLoading(false);
+                    setPostData(data.post);
+                }
+            })
+    }
     const replyToComment = async (comment) => {
 
         setIsReply(true);
@@ -208,7 +232,7 @@ const SinglePost = ({ postId }) => {
                     </div>
                 </div>
 
-                <div className='order-3 ml-[-6rem] badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[0.6rem]'>{postData.postType}
+                <div className='order-3  badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[-7rem]'>{postData.postType}
                 </div>
 
                 <div className='order-2 flex items-center justify-end sm:order-3'>
@@ -216,7 +240,13 @@ const SinglePost = ({ postId }) => {
                         <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-1"><span className=''><FaEllipsis /></span></div>
                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
 
-                            <li><a>This is option 2</a></li>
+                            <li>
+                                <button className="" onClick={() => document.getElementById('my_modal_3').showModal()}>Edit</button>
+                                <dialog className="flex justify-center items-center w-full h-screen modal" id="my_modal_3" >
+                                    <EditPostModal />
+                                </dialog>
+                            </li>
+                            <li><button>Delete</button></li>
                         </ul>
                     </div>
                 </div>
