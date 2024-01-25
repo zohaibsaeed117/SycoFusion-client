@@ -1,10 +1,12 @@
-"use client"import React, { useEffect, useState } from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
 import { FaEllipsis, FaMessage, FaShare, FaThumbsUp } from 'react-icons/fa6'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import PostModal from './PostModal'
-const Post = ({ postId, createdAt, Username, caption, likes, postType, attachments }) => {
+import { useUserStore } from '@/store/store';
+const Post = ({ postId, createdAt, username, caption, likes, postType, attachments }) => {
     const { Username, UserId } = useUserStore();
     const [isFollow, setIsFollow] = useState(false);
     const checkFollow = async () => {
