@@ -4,6 +4,11 @@ import { FaEllipsis, FaMessage, FaShare, FaThumbsUp } from 'react-icons/fa6'
 import PostModal from './PostModal'
 const Post = ({postId, createdAt, Username, caption, likes, postType, attachments}) => {
 
+    const blockUser = () => {
+        console.log('Blocked User');
+    }
+
+
  return (
         <div className='max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
             <header className='flex items-center justify-between m-2'>
@@ -18,8 +23,9 @@ const Post = ({postId, createdAt, Username, caption, likes, postType, attachment
                 <div className='dropdown dropdown-left'>
                     <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-1"><span className=''><FaEllipsis /></span></div>
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>This is option 1</a></li>
-                        <li><a>This is option 2</a></li>
+                    <li><button onClick={blockUser} className='text-red-500'>Block User</button></li>
+                        
+                       
                     </ul>
                 </div>
             </header>

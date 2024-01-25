@@ -174,7 +174,7 @@ const Post = ({postId, createdAt, username, caption, likes, postType, attachment
                 <div className='dropdown dropdown-left'>
                     <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-1"><span className=''><FaEllipsis /></span></div>
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>This is option 1</a></li>
+                        <li><button className='text-red-500'>Block User</button></li>
                         <li><a>This is option 2</a></li>
                     </ul>
                 </div>
