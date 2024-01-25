@@ -13,6 +13,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
     const [isLiked, setIsLiked] = useState(null);
 
     const [totalLikes, setTotalLikes] = useState(likes.length);
+    const isAuthor = username === Username ? true : false
 
 
     const isLikePost = () => {
@@ -131,7 +132,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
             setIsFollow(false);
         }
     }
-    
+
 
     const handleLike = () => {
         console.log("Liking Post")
@@ -186,12 +187,12 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
 
                 <div className='order-3 badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[-7rem]'>{postType}</div>
 
-                <div className='order-2 flex items-center justify-end sm:order-3'>
+                <div className={`order-2 flex items-center justify-end sm:order-3`}>
                     {
                         isFollow ? (
-                            <button onClick={removeFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>
+                            <button onClick={removeFollower} className='${isAuthor ? "hidden" : "flex"} btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>
                         ) : (
-                            <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Follow</button>
+                            <button onClick={addFollower} className={`${isAuthor ? "hidden" : "flex"} btn btn-sm text-[0.5rem] btn-primary sm:text-lg`}>Follow</button>
                         )
                     }
                     <div className='dropdown dropdown-left'>
@@ -225,13 +226,13 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
             <div className='flex items-center justify-evenly py-2'>
                 <button text onClick={handleLike} className={`btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg`}>
                     <FaThumbsUp style={{
-                        color: isLiked?'#4a00ff':""
-                    }}/>
+                        color: isLiked ? '#4a00ff' : ""
+                    }} />
                     <p style={{
-                        color: isLiked?'#4a00ff':""
+                        color: isLiked ? '#4a00ff' : ""
                     }}>Like</p>
                     <p style={{
-                        color: isLiked?'#4a00ff':""
+                        color: isLiked ? '#4a00ff' : ""
                     }}>({totalLikes})</p>
                 </button>
                 <a href={`/posts/${postId}`} className="btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg"><FaMessage />

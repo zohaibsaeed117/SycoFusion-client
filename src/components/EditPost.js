@@ -162,7 +162,6 @@ function NewPost({ PostData }) {
             <progress className="progress progress-error w-56" value={attachmentProgress} max="100"></progress>
             <span className="font-bold mx-5">{parseInt(attachmentProgress)}%</span>
           </div>
-
         </div>
       </div>
     </div>
