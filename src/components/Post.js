@@ -159,6 +159,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
     return (
         <div className='w-[85vw] max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
             <header className='grid items-center justify-between m-2 grid-cols-2 gap-3 sm:grid-cols-3'>
+
                 <div className='flex gap-3 order-1'>
                     <img src={`https://ui-avatars.com/api/?name=${Username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
                     <div className='flex flex-col'>
@@ -166,8 +167,10 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                         <p className='text-gray-800 font-extralight text-[10px] sm:text-sm'>{format(createdAt)}</p>
                     </div>
                 </div>
-                <div className='order-3 badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[[0.6rem]rem]'>{postType}</div>
-                <div className='order-2 flex items-center justify-end sm:order-3'>
+
+                <div className='order-3 badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[0.6rem]'>{postType}</div>
+                
+                <div className='order-2 ml-[-6rem] flex items-center justify-end sm:order-3'>
                     {
                         isFollow ? (
                             <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>

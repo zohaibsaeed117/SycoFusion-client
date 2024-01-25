@@ -197,16 +197,20 @@ const SinglePost = ({ postId }) => {
     return (
         <div className='w-[85vw] max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
 
-            <header className='flex items-center justify-between m-2'>
-                <div className='flex gap-3'>
+            <header className='grid items-center justify-between m-2 grid-cols-2 gap-3 sm:grid-cols-3'>
+
+                <div className='flex gap-3 order-1'>
                     <img src={`https://ui-avatars.com/api/?name=${postData.username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
                     <div className='flex flex-col'>
                         <p className=' font-medium'>{postData.username}</p>
                         <p className='text-gray-800 font-extralight text-sm'>{format(postData.createdAt)}</p>
                     </div>
-                    <div className='badge my-auto badge-primary'>{postData.postType}</div>
                 </div>
-                <div className='flex items-center justify-center'>
+
+                <div className='order-3 ml-[-6rem] badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[0.6rem]'>{postData.postType}
+                </div>
+
+                <div className='order-2 flex items-center justify-end sm:order-3'>
                     <div className='dropdown dropdown-left'>
                         <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-1"><span className=''><FaEllipsis /></span></div>
                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -214,9 +218,6 @@ const SinglePost = ({ postId }) => {
                             <li><a>This is option 2</a></li>
                         </ul>
                     </div>
-                    <form method="dialog">
-                        <button className="btn shadow-none border-none rounded-full bg-transparent m-1">✕</button>
-                    </form>
                 </div>
 
             </header>
@@ -243,18 +244,18 @@ const SinglePost = ({ postId }) => {
             <div className='px-4 my-2 text-sm sm:text-lg'>{postData.caption}</div>
 
             <div className='flex items-center justify-evenly py-2'>
-                <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
+                <button className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
                     <p>({postData?.likes?.length})</p>
                 </button>
-                <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
+                <button className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaMessage />
                     <p>Comments</p>
                     <p>({comments.length})</p>
                 </button>
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
+                <button className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaShare />
                     <p>Share</p>
                     <p></p>
