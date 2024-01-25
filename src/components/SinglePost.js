@@ -5,7 +5,7 @@ import Comment from './Comment';
 import { useUserStore } from '@/store/store';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-const PostModal = ({ postId }) => {
+const SinglePost = ({ postId }) => {
     const { Username, setIsAlert, setAlertMsg, setAlertType } = useUserStore();
     //createdAt, Username, caption, likes, postType, attachments
     const [isLoading, setIsLoading] = useState(true);
@@ -158,8 +158,44 @@ const PostModal = ({ postId }) => {
         getPostData();
     }, [postId]);
 
+    // const postData = {
+    //     _id: 1,
+    //     username: "Zohaib Saeed",
+    //     createdAt: "Hello",
+    //     postType: "image",
+    //     caption: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos, vitae eaque. Magnam atque recusandae assumenda architecto dicta nesciunt ducimus harum. Dicta non quasi veritatis minus commodi, sapiente facilis voluptatum velit!",
+    //     likes: 50,
+    //     comments: [
+    //         {
+    //             username: "Zohaib Saeed",
+    //             message: "THis is comment",
+    //             isReply: false,
+    //             replyTo: null,
+    //             postId: 1
+    //         },
+    //     ],
+    //     attachments: [
+    //         {
+    //             type: "image",
+    //             url: "./abc.jpg"
+    //         },
+    //         {
+    //             type: "image",
+    //             url: "./abc.jpg"
+    //         },
+    //     ]
+    // }
+    // const comments = postData.comments;
+    // const { isReply,message,replyTo,postIds,userName } = comments;
+    // const isLoading = false;
+    // const addComment=()=>{
+    //     console.log("object")
+    // }
+    // const renderReplies=()=>{
+    //     console.log("object")
+    // }
     return (
-        <div className='modal-box w-11/12 max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
+        <div className='w-[85vw] max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
 
             <header className='flex items-center justify-between m-2'>
                 <div className='flex gap-3'>
@@ -263,4 +299,6 @@ const PostModal = ({ postId }) => {
         </div >
     )
 }
-export default PostModal
+
+
+export default SinglePost
