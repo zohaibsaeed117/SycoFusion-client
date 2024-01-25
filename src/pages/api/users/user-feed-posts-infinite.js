@@ -13,7 +13,7 @@ const handler = async (request, response) => {
 
     let allPosts = await Post.find({username: username});
     let postsLength = allPosts.length;
-    let posts = await Post.find({ }).skip(skip).limit(limit)
+    let posts = await Post.find({ username: username}).skip(skip).limit(limit)
 
     return response.status(200).json({allPostsLength: postsLength,posts: posts})
     
