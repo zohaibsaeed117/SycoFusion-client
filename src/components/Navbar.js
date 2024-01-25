@@ -195,10 +195,13 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                   >
                     <li>
-                      <a className="justify-between">Welcome, {Username} - {UserId}</a>
+                      <a className="justify-between">Welcome, {Username}</a>
                     </li>
                     <li>
                       <Link href={`/profile/${Username}`}>My Profile</Link>
+                    </li>
+                    <li>
+                      <Link href={`/profile/settings`}>Settings</Link>
                     </li>
                     <li>
                       <a onClick={logout}>Logout</a>
