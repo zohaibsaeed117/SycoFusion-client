@@ -1,9 +1,11 @@
 "use client"
 import React, { useState } from 'react'
 import {useUserStore} from '@/store/store';
+import { Router } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Signup = () => {
-
+    const router = useRouter();
     
     const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setFirstName, setLastName, setUsername, setAvatar, Username } = useUserStore();
     const createAccount = () => {
@@ -21,6 +23,10 @@ const Signup = () => {
           setAlertMsg(data.message);
           setIsAlert(true);
           setAlertType(data.type);
+
+          if (data.type == "success") {
+            router.push("/login");
+          }
         })
       }
 

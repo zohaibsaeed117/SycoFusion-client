@@ -6,7 +6,10 @@ import { useUserStore } from '@/store/store';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import EditPostModal from './EditPostModal'
+import { useRouter } from 'next/navigation';
 const SinglePost = ({ postId }) => {
+    const router = useRouter();
+
     const { Username, setIsAlert, setAlertMsg, setAlertType } = useUserStore();
     //createdAt, Username, caption, likes, postType, attachments
     const [isLoading, setIsLoading] = useState(true);
@@ -18,6 +21,62 @@ const SinglePost = ({ postId }) => {
     const [isReply, setIsReply] = useState(false);
     const [replyTo, setReplyTo] = useState("");
     const [replyComment, setReplyComment] = useState("");
+
+
+    const [totalLikes, setTotalLikes] = useState(0);
+
+    const handleLike = () => {
+        console.log("Liking Post")
+
+        const data = {
+            postId: postId,
+            likeUsername: Username
+        }
+        fetch(`/api/likes/handle-likes`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setAlertMsg(data.message);
+                setAlertType(data.type);
+                setIsAlert(true);
+                if (data.liked) {
+                    setTotalLikes(totalLikes + 1)
+                    console.log("Post Liked")
+
+                }
+
+            })
+    }
+    const deletePost = () => {
+    const data = {
+    postId: postId
+    }
+
+    fetch("/api/posts/delete-post", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    }).then(res=>{
+        return res.json()
+    })
+    .then(data =>{
+        setIsAlert(true);
+        setAlertMsg(data.message);
+        setAlertType(data.type);
+
+        if (data.type == "success") {
+            router.push("/feed")
+        }
+    })
+    
+    }
     const editPost = () => {
         setIsLoading(true);
         const data = {
@@ -170,6 +229,7 @@ const SinglePost = ({ postId }) => {
             const result = await response.json();
             console.log(result);
             setPostData(result.post[0]);
+            setTotalLikes(result.post[0]?.likes?.length)
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -243,10 +303,10 @@ const SinglePost = ({ postId }) => {
                             <li>
                                 <button className="" onClick={() => document.getElementById('my_modal_3').showModal()}>Edit</button>
                                 <dialog className="flex justify-center items-center w-full h-screen modal" id="my_modal_3" >
-                                    <EditPostModal />
+                                    <EditPostModal PostData={postData} />
                                 </dialog>
                             </li>
-                            <li><button>Delete</button></li>
+                            <li><button onClick={deletePost}>Delete</button></li>
                         </ul>
                     </div>
                 </div>
@@ -275,7 +335,7 @@ const SinglePost = ({ postId }) => {
             <div className='px-4 my-2 text-sm sm:text-lg'>{postData.caption}</div>
 
             <div className='flex items-center justify-evenly py-2'>
-                <button className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
+                <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
                     <p>({postData?.likes?.length})</p>

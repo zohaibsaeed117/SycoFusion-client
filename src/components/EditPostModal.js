@@ -4,8 +4,9 @@ import { FaEllipsis, FaMessage, FaPaperPlane, FaShare, FaThumbsUp } from 'react-
 import Comment from './Comment';
 import { useUserStore } from '@/store/store';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import EditPost from "./EditPost"
 import '@splidejs/react-splide/css';
-const PostModal = () => {
+const PostModal = ({PostData}) => {
     const { Username, setIsAlert, setAlertMsg, setAlertType } = useUserStore();
     //createdAt, Username, caption, likes, postType, attachments
     const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +29,7 @@ const PostModal = () => {
       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
     <h3 className="font-bold text-lg">Edit the post!</h3>
-    <p className="py-4">Press ESC key or click on ✕ button to close</p>
+    <EditPost PostData={PostData}/>
   </div>
 </>
     )
