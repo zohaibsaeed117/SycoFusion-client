@@ -38,6 +38,7 @@ const Login = () => {
           setUserId(data.userId)
           localStorage.setItem("sycofusion_token", data.token);
           console.log(`User: ${data.username} - ${Username}`)
+          router.push("/feed");
         }
 
 

@@ -1,28 +1,34 @@
 "use client"
 import React, { useState } from 'react'
-import { useUserStore } from '@/store/store';
+import {useUserStore} from '@/store/store';
+import { Router } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Signup = () => {
-
-
+    const router = useRouter();
+    
     const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setFirstName, setLastName, setUsername, setAvatar, Username } = useUserStore();
     const createAccount = () => {
 
-
+        
         fetch(`/api/auth/signup`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user)
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user)
         })
-            .then(res => res.json())
-            .then(data => {
-                setAlertMsg(data.message);
-                setIsAlert(true);
-                setAlertType(data.type);
-            })
-    }
+        .then(res => res.json())
+        .then(data => {
+          setAlertMsg(data.message);
+          setIsAlert(true);
+          setAlertType(data.type);
+
+          if (data.type == "primary") {
+            router.push("/login");
+          }
+        })
+      }
 
     const [user, setUser] = useState({
         username: "",

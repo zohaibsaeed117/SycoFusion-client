@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import "../css/new-post.css";
 import "../css/globals.css";
 
@@ -11,18 +11,25 @@ import { useUserStore } from "@/store/store";
 import ImgInput from "./ImgInput"
 import { useRouter } from "next/navigation";
 
-function NewPost() {
+function NewPost({PostData}) {
   const router = useRouter();
   const [caption, setCaption] = useState("");
   const [title, setTitle] = useState("");
+  const [Id, setId] = useState("");
   const [postType, setPostType] = useState("Daily Post");
   const { theme,isAlert, alertMsg, alertType, setIsAlert, setAlertMsg, setAlertType, setTheme, setIsLogin, isLogin, setFirstName, setLastName, setAvatar, Username, attachments,resetAttachments,uploadProgressCaption, attachmentProgress } = useUserStore();
 
 
+  useEffect(() => {
+    setTitle(PostData?.title);
+    setCaption(PostData?.caption);
+    setId(PostData?._id)
+  }, [])
+  
   const clearAttachments = () => {
     resetAttachments();
   }
-  const publishPost = () => {
+  const updatePost = () => {
     if (caption == "") {
       alert("Write some caption for the post");
     }
@@ -31,13 +38,12 @@ function NewPost() {
     }
     else {
       const data = {
-        "username": Username,
+        "postId": Id,
         "title": title,
         "caption": caption,
-        "postType": postType,
-        "attachments": attachments
+        "postType": postType
       }
-      fetch(`/api/posts/new-post`, {
+      fetch(`/api/posts/edit-post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +58,7 @@ function NewPost() {
 
         if (data.type == "success") {
 
-          router.push(`/posts/${data.id}`)
+          // router.push(`/posts/${data.id}`)
 
         }
   
@@ -102,11 +108,11 @@ Click to show/hide files ({attachments.length})
 </div>
 <div className="collapse-content"> 
 {
-  attachments.length==0?<h1 className="my-5">No Upload Files Found. Upload some files to see them here.</h1>:""
+  attachments.length==0?<h1 className="my-5">No Files Uploaded.</h1>:""
 }
 <div className="grid grid-cols-3">
 
-    {attachments.map((attach, index) => {
+    {PostData?.attachments?.map((attach, index) => {
       return (
         <div
         className="flex justify-center items-center w-full"
@@ -131,7 +137,7 @@ Click to show/hide files ({attachments.length})
       );
     })}
   </div>
-<button onClick={clearAttachments} className="text-center my-10 btn redBtn">Clear Attachments</button>
+{/* <button onClick={clearAttachments} className="text-center my-10 btn redBtn">Clear Attachments</button> */}
 </div>
 </div>
 
@@ -143,10 +149,10 @@ Click to show/hide files ({attachments.length})
     className="flex justify-between items-center"
   >
     <div className="flex justify-center items-center icons">
-     <ImgInput/>
+     {/* <ImgInput/> */}
     </div>
 
-    <button onClick={publishPost} className="btn btn-primary redBtn">Post</button>
+    <button onClick={updatePost} className="btn btn-primary redBtn">Update</button>
   </div>
 
   <div className="my-10 flex justify-center items-center flex-col">

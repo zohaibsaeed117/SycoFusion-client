@@ -173,7 +173,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 <div className='order-2 flex items-center justify-end sm:order-3'>
                     {
                         isFollow ? (
-                            <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>
+                            <button onClick={removeFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>
                         ) : (
                             <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Follow</button>
                         )
@@ -210,7 +210,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
-                    <p>({likes.length})</p>
+                    <p>({totalLikes})</p>
                 </button>
                 <a href={`/posts/${postId}`} className="btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg"><FaMessage />
                     <p>Comments</p>
