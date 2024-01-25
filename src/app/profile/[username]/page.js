@@ -16,6 +16,7 @@ function page({params}) {
     const [followers, setFollowers] = useState(0)
     const [following, setFollowing] = useState(0);
     const [posts, setPosts] = useState([]);
+    const [skills, setSkills] = useState([]);
 
     const getUserPosts = async() => {
       await fetch(`/api/posts/getProfilePosts`,{
@@ -55,6 +56,9 @@ function page({params}) {
           setUserData(data.data);
           console.log(data.data);
           setFollowers(data.data.user.followers.length);
+          const skills = data.data.user?.skills;
+          const SkillsArr = skills.split(",");
+          setSkills(SkillsArr);
           setFollowing(data.data.user.following.length);
          setIsLoading(false)
         
@@ -100,11 +104,18 @@ function page({params}) {
           fontSize: "2rem"
         }} className='my-10 font-bold'>Skills 🛠</h1>
         <div className='flex justify-center items-center flex-col md:flex-row'>
+         
         {/* <button onClick={threeDMapView} className='my-5 btn redOutlineBtn'>3D View</button>
         <button onClick={twoDMapView} className='btn redBtn sm:btn'>Simple View</button> */}
         </div>
         </div>
-     
+        <div className='ml-10'>
+        {
+           skills.map((skill, index) => {
+            return <div key={index} className="mx-2 badge badge-primary">{skill}</div>
+            })
+          }
+        </div>
       
         <div
         style={
@@ -115,7 +126,7 @@ function page({params}) {
         }
         className='flex justify-between items-center'>
         <h1 className='my-10 text-3xl font-bold'>Posts 📝</h1>
-        <Link href={`/profiles/${username}/posts`}>Show All</Link>
+        <Link href={`/profile/${username}/posts`}>Show All</Link>
         </div>
     
         <div className='flex justify-center items-center flex-col'>

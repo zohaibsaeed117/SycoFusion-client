@@ -78,7 +78,8 @@ export default function Home({ params }) {
     setUserData(responseData.data.user);  
     console.log(responseData.data.user)
 
-    setFirstName(responseData.data.user.lastName);
+    setFirstName(responseData.data.user.firstName);
+    console.log(firstName)
     setLastName(responseData.data.user.lastName);
     setEmail(responseData.data.user.email);
     setAge(responseData.data.user.age);

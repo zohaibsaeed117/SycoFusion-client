@@ -9,6 +9,39 @@ import { useUserStore } from '@/store/store';
 const Post = ({ postId, createdAt, username, caption, likes, postType, attachments }) => {
     const { Username, UserId } = useUserStore();
     const [isFollow, setIsFollow] = useState(false);
+
+    
+    const blockUser = async() => {
+        console.log('Blocked User');
+        //finding id of user to block
+        const response = await fetch(`/api/users/getUserId`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: username })
+
+        })
+        const data = await response.json();
+        const blockUserId = data.user?._id;
+
+        fetch("/api/users/blockUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({user: UserId, userToBlock: blockUserId})
+        }).then(res => res.json())
+        .then(data=> {
+
+            console.log(data);
+            setIsAlert(true);
+            setAlertMsg(data.message);
+            setAlertType(data.type)
+        })
+    }
+
+
     const checkFollow = async () => {
         const response = await fetch(`/api/users/getUserId`, {
             method: "POST",
@@ -122,7 +155,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
     const {setIsAlert, setAlertMsg, setAlertType } = useUserStore();
 
 
-    const [totalLikes, setTotalLikes] = useState(likes.length);
+    const [totalLikes, setTotalLikes] = useState(likes?.length);
 
     const handleLike = () => {
         console.log("Liking Post")
@@ -176,15 +209,15 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 <div className='dropdown dropdown-left'>
                     <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-1"><span className=''><FaEllipsis /></span></div>
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><button className='text-red-500'>Block User</button></li>
+                        <li><button onClick={blockUser} className='text-red-500'>Block User</button></li>
                         <li><a>This is option 2</a></li>
                     </ul>
                 </div>
             </header>
             <div className='px-4 my-2 text-sm sm:text-lg'>{caption}</div>
-            <Splide options={{ arrows: attachments.length > 1 ? true : false }} className='my-4' aria-label="My Favorite Images">
+            <Splide options={{ arrows: attachments?.length > 1 ? true : false }} className='my-4' aria-label="My Favorite Images">
                 {
-                    attachments.map((attachment, index) => {
+                    attachments?.map((attachment, index) => {
                         return (
                             <SplideSlide>
                                 <img className='slider-img rounded-2xl' key={index} src={attachment.url} alt="post" />
@@ -197,7 +230,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
-                    <p>({likes.length})</p>
+                    <p>({likes?.length})</p>
                 </button>
                 <button className="btn border-none shadow-none bg-transparent" onClick={() => document.getElementById(`modal_${postId}`).showModal()}><FaMessage />
                     <p>Comments</p>

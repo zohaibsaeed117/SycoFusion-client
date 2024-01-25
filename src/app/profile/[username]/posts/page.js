@@ -1,9 +1,10 @@
 "use client";
-import Post from '@/components/Post'
+import Post from '@/components/PostFeedView'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-export default function Home() {
+export default function Home({params}) {
+    const {username } = params;
   const [isLoading, setIsLoading] = useState(true);
   const [isNewLoading, setIsNewLoading] = useState(true);
 
@@ -21,12 +22,12 @@ export default function Home() {
     // console.log("Fetching more....")
    
 
-    await fetch(`/api/posts/feed-posts-infinite`,{
+    await fetch(`/api/users/user-feed-posts-infinite`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({page: page})
+      body: JSON.stringify({page: page, username: username})
     })
     .then(res => res.json())
     .then(data => {
@@ -36,7 +37,6 @@ export default function Home() {
       let len = (data.posts).length;
       setCurrentPosts(currentPosts+len)
 
-   
     setAllPosts((prevPosts) => [...prevPosts, ...data.posts])
 
     if (allPosts.length == totalPosts) {
@@ -53,13 +53,6 @@ export default function Home() {
 
     
 
-  }
-
-  const getProjects = async () => {
-    const res = await fetch('/api/projects/get-projects')
-    const { projects } = await res.json()
-    setProjects(projects);
-    setIsLoading(false);  
   }
 
   useEffect(() => {

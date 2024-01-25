@@ -1,11 +1,38 @@
 "use client"
 import React from 'react'
 import { FaEllipsis, FaMessage, FaShare, FaThumbsUp } from 'react-icons/fa6'
-import PostModal from './PostModal'
-const Post = ({postId, createdAt, Username, caption, likes, postType, attachments}) => {
+import PostModal from './PostModal';
+import { useUserStore } from '@/store/store';
+const Post = ({postId, createdAt, username, caption, likes, postType, attachments}) => {
+    const { Username, UserId, setAlertMessage, setAlertType, setIsAlert } = useUserStore();
 
-    const blockUser = () => {
+    const blockUser = async() => {
         console.log('Blocked User');
+        //finding id of user to block
+        const response = await fetch(`/api/users/getUserId`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: username })
+
+        })
+        const data = await response.json();
+        const blockUserId = data.user?._id;
+
+        fetch("/api/users/blockUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({user: UserId, userToBlock: blockUserId})
+        })
+
+        const result = await res.json();
+        console.log(result);
+        setIsAlert(true);
+        setAlertMessage(result.message);
+        setAlertType(result.type)
     }
 
 
@@ -13,9 +40,9 @@ const Post = ({postId, createdAt, Username, caption, likes, postType, attachment
         <div className='max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
             <header className='flex items-center justify-between m-2'>
                 <div className='flex gap-3'>
-                    <img src={`https://ui-avatars.com/api/?name=${Username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
+                    <img src={`https://ui-avatars.com/api/?name=${username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
                     <div className='flex flex-col'>
-                        <p className=' font-medium'>{Username} <button>Follow</button></p>
+                        <p className=' font-medium'>{username} <button>Follow</button></p>
                         <p className='text-red-600 font-extralight text-sm'>{createdAt}</p>
                     </div>
                     <div className='badge my-auto badge-primary'>Acheivement</div>
