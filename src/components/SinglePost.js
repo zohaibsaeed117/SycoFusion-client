@@ -61,6 +61,7 @@ const SinglePost = ({ postId }) => {
                         comment={reply}
                         deleteComment={deleteComment}
                         replyToComment={replyToComment}
+                        isReply={true}
                     />
                 ))}
             </div>

@@ -1,5 +1,5 @@
 "use client";
-import Post from '@/components/PostFeedView'
+import Post from '@/components/Post'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
@@ -61,7 +61,7 @@ export default function Home({params}) {
   
     return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className='text-4xl p-10 text-center font-bold my-10'>Latest Posts</h1>
+      <h1 className='text-4xl p-10 text-center font-bold my-10'>Posts by {username}</h1>
       
       <div className='flex justify-center items-center flex-col'>
         {
