@@ -17,15 +17,10 @@ const users = new Schema({
     url: {type: String},
     name: {type: String}
   }],
-  fusions:  [{
-    username: {
-      type: String,
-      required: true
-    },
-    streakCount: {
-      type: Number
-    }
-  }],
+  followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  blockedUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  
 }, { timestamps: true });
 
 

@@ -3,6 +3,7 @@ import { create } from 'zustand'
 export const useUserStore = create((set) => ({
   isLogin: false,
   Username: "check",
+  UserId: "",
   email: "",
   avatar: "",
   firstName: "",
@@ -27,6 +28,7 @@ export const useUserStore = create((set) => ({
   setLastName: (newState) => set({ lastName:newState}),
   setIsLogin: (newState) => set({ isLogin:newState}),
   setUsername: (newState) => set({ Username:newState}),
+  setUserId: (newState) => set({ UserId:newState}),
   setEmail: (newState) => set({ email:newState}),
   setAvatar: (newState) => set({ avatar:newState}),
   setIsAlert: (newState) => set({ isAlert:newState}),

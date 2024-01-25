@@ -9,8 +9,8 @@ const handler = async (req, res) => {
         let user = await User.findOne({username: rUsername})
        
         if (user && (await bcrypt.compare(rPassword, user.password))) {
-            var token = jwt.sign({username: user.username, password: user.password, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar}, process.env.NEXT_PUBLIC_JWT_TOKEN);
-            return res.status(200).json({username: user.username, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar, message: "User Logged in", type:"success", token: token})
+            var token = jwt.sign({userId: user._id,username: user.username, password: user.password, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar}, process.env.NEXT_PUBLIC_JWT_TOKEN);
+            return res.status(200).json({userId: user._id,username: user.username, firstName:user.firstName, lastName:user.lastName, avatar: user.avatar, message: "User Logged in", type:"success", token: token})
 
         }
         else {

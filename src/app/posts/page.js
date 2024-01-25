@@ -73,7 +73,7 @@ export default function Home() {
       <div className='flex justify-center items-center flex-col'>
         {
           allPosts.map((project, index) => {
-            return       <Post key={project._id+index} postId={project._id} createdAt={project.createdAt} Username={project.username} caption={project.caption} likes={project.likes} postType={project.postType} attachments={project.attachments}/>
+            return       <Post key={project._id+index} postId={project._id} createdAt={project.createdAt} username={project.username} caption={project.caption} likes={project.likes} postType={project.postType} attachments={project.attachments}/>
 
           })
         }

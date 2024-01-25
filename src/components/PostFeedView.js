@@ -10,7 +10,7 @@ const Post = ({postId, createdAt, Username, caption, likes, postType, attachment
                 <div className='flex gap-3'>
                     <img src={`https://ui-avatars.com/api/?name=${Username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
                     <div className='flex flex-col'>
-                        <p className=' font-medium'>{Username}</p>
+                        <p className=' font-medium'>{Username} <button>Follow</button></p>
                         <p className='text-red-600 font-extralight text-sm'>{createdAt}</p>
                     </div>
                     <div className='badge my-auto badge-primary'>Acheivement</div>
