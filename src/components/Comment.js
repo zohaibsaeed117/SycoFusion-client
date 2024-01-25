@@ -2,7 +2,7 @@
 import React, {useState} from 'react'
 import {format} from "timeago.js";
 import { useUserStore } from '@/store/store';
-const Comment = ({comment, deleteComment, replyToComment}) => {
+const Comment = ({comment, deleteComment, replyToComment, isReply}) => {
     
     const isAuthor = true;
     const {Username, setIsAlert, setAlertMsg, setAlertType } = useUserStore();
@@ -82,10 +82,14 @@ const Comment = ({comment, deleteComment, replyToComment}) => {
                             <li><button className='text-red-500' onClick={deleteComment}>Delete</button></li>
                         </ul>
                     </div>
-
-                    <button onClick={replyToComment} style={{
-                    display: isEdit? "none" : "block"
-                }}>reply</button>
+{
+    isReply?null:(
+        
+        <button onClick={replyToComment} style={{
+            display: isEdit? "none" : "block"
+        }}>reply</button>
+    )
+}
                 </div>
             </div>
 
