@@ -4,6 +4,7 @@ import Signup from "@/components/Signup";
 import Post from "@/components/PostFeedView";
 import HeroSection from "@/components/HeroSection";
 import Testimonials from "@/components/Testimonials";
+import CTA from "@/components/CTA";
 
 
 export default function () {
@@ -19,6 +20,7 @@ export default function () {
         // </div>
       }
       <HeroSection />
+      <CTA />
       <Testimonials />
     </>
   )
