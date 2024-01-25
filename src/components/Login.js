@@ -66,6 +66,9 @@ const Login = () => {
       <a href="/error" className="underline">
         Forgot Your Password
       </a>
+      <a href="/signup" className="underline">
+        Don't Have an account?Click here to signup
+      </a>
       <button onClick={login} className="btn btn-active btn-primary text-xl text-white">
         Login
       </button>
