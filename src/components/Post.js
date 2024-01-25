@@ -90,13 +90,13 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ username: username })
-        
+
         })
         const data = await response.json();
         console.log(data)
         const userId = data.user._id;
 
-        
+
         const res = await fetch('/api/followers/unfollow-user', {
             method: "POST",
             headers: {
@@ -119,7 +119,7 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
             setIsFollow(false);
         }
     }
-    const {setIsAlert, setAlertMsg, setAlertType } = useUserStore();
+    const { setIsAlert, setAlertMsg, setAlertType } = useUserStore();
 
 
     const [totalLikes, setTotalLikes] = useState(likes.length);
@@ -158,27 +158,30 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
 
     return (
         <div className='w-[85vw] max-w-[50rem] my-4 mx-auto shadow-lg rounded-xl'>
-            <header className='flex items-center justify-between m-2'>
-                <div className='flex gap-3'>
+            <header className='grid items-center justify-between m-2 grid-cols-2 gap-3 sm:grid-cols-3'>
+                <div className='flex gap-3 order-1'>
                     <img src={`https://ui-avatars.com/api/?name=${Username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
                     <div className='flex flex-col'>
-                        <p className=' font-medium'>{username} {
-                            isFollow ? (
-                                <button onClick={addFollower} className='btn btn-sm btn-primary'>Unfollow</button>
-                            ) : (
-                                <button onClick={addFollower} className='btn btn-sm btn-primary'>Follow</button>
-                            )
-                        }</p>
-                        <p className='text-gray-800 font-extralight text-sm'>{format(createdAt)}</p>
+                        <p className=' font-medium'>{username}</p>
+                        <p className='text-gray-800 font-extralight text-[10px] sm:text-sm'>{format(createdAt)}</p>
                     </div>
-                    <div className='badge my-auto badge-primary'>{postType}</div>
                 </div>
-                <div className='dropdown dropdown-left'>
-                    <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-1"><span className=''><FaEllipsis /></span></div>
-                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>This is option 1</a></li>
-                        <li><a>This is option 2</a></li>
-                    </ul>
+                <div className='order-3 badge my-auto badge-primary badge-sm text-[0.5rem] sm:badge-lg sm:text-md sm:order-2 sm:ml-[[0.6rem]rem]'>{postType}</div>
+                <div className='order-2 flex items-center justify-end sm:order-3'>
+                    {
+                        isFollow ? (
+                            <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Unfollow</button>
+                        ) : (
+                            <button onClick={addFollower} className='btn btn-sm text-[0.5rem] btn-primary sm:text-lg'>Follow</button>
+                        )
+                    }
+                    <div className='dropdown dropdown-left'>
+                        <div tabIndex={0} role="button" className="btn shadow-none border-none rounded-full bg-transparent m-0 sm:m-1"><span className=''><FaEllipsis /></span></div>
+                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-0 shadow bg-base-100 rounded-box w-52">
+                            <li><a>This is option 1</a></li>
+                            <li><a>This is option 2</a></li>
+                        </ul>
+                    </div>
                 </div>
             </header>
             <div className='px-4 my-2 text-sm sm:text-lg'>{caption}</div>
@@ -194,19 +197,16 @@ const Post = ({ postId, createdAt, username, caption, likes, postType, attachmen
                 }
             </Splide>
             <div className='flex items-center justify-evenly py-2'>
-                <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
+                <button onClick={handleLike} className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaThumbsUp />
                     <p>Like</p>
                     <p>({likes.length})</p>
                 </button>
-                <button className="btn border-none shadow-none bg-transparent" onClick={() => document.getElementById(`modal_${postId}`).showModal()}><FaMessage />
+                <a href={`/posts/${postId}`} className="btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg"><FaMessage />
                     <p>Comments</p>
                     <p></p>
-                </button>
-                <dialog id={`modal_${postId}`} className="modal">
-                    <PostModal totalLikes={totalLikes} handleLike={handleLike} postId={postId} />
-                </dialog>
-                <button className='btn border-none shadow-none bg-transparent text-center text-md cursor-pointer hover:text-gray-400 sm:text-lg'>
+                </a>
+                <button className='btn border-none shadow-none bg-transparent text-center text-[0.6rem] cursor-pointer  sm:text-lg'>
                     <FaShare />
                     <p>Share</p>
                     <p></p>

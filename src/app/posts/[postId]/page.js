@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import {AiFillLike} from "react-icons/ai";
-import {BiComment} from "react-icons/bi";
-import {BsShareFill} from "react-icons/bs";
+import { AiFillLike } from "react-icons/ai";
+import { BiComment } from "react-icons/bi";
+import { BsShareFill } from "react-icons/bs";
 
 import "../../../css/globals.css";
 
@@ -11,9 +11,9 @@ import { useUserStore } from "@/store/store";
 
 import PostFeedView from "@/components/Post";
 import { useRouter } from "next/navigation";
+import SinglePost from "@/components/SinglePost";
 var jwt = require('jsonwebtoken');
 export default function Home({ params }) {
-
   const { postId } = params;
   const [postContent, setPostContent] = useState("");
   const [postComments, setPostComments] = useState([]);
@@ -22,12 +22,12 @@ export default function Home({ params }) {
   const [caption, setCaption] = useState("");
   const [avatar, setAvatar] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  
+
 
   const { setIsAlert, setAlertMsg, setAlertType, username } = useUserStore();
   const router = useRouter();
 
-  const checkIsAccountLogin= async() => {
+  const checkIsAccountLogin = async () => {
 
     let key = process.env.NEXT_PUBLIC_JWT_TOKEN;
     // console.log(`JWT TOKEN: ${key}`)
@@ -39,19 +39,16 @@ export default function Home({ params }) {
         router.push("/login")
       }
     }
-    else {
-      router.push("/login")
-    }
   }
 
- 
 
 
-  
+
+
 
   useEffect(() => {
     checkIsAccountLogin();
-   
+
     const data = {
       postId: postId,
     };
@@ -85,18 +82,18 @@ export default function Home({ params }) {
         ""
       )}
 
-      
-    <div className='flex justify-center items-center flex-col'>
-      
-   {
-    isLoading==false?(
-      <PostFeedView postId={postContent._id} createdAt={postContent.createdAt} Username={postContent.username} caption={postContent.caption} likes={postLikes} postType={postContent.postType} attachments={postAttachments}/>
-  
-    ):""
-   }
-  
 
-    
+      <div className='flex justify-center items-center flex-col'>
+
+        {
+          isLoading == false ? (
+            <SinglePost postId={postContent._id} createdAt={postContent.createdAt} Username={postContent.username} caption={postContent.caption} likes={postLikes} postType={postContent.postType} attachments={postAttachments} />
+
+          ) : ""
+        }
+
+
+
       </div>
     </>
   );
