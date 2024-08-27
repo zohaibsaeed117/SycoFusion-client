@@ -12,6 +12,7 @@ import { useUserStore } from "@/store/store";
 import PostFeedView from "@/components/Post";
 import { useRouter } from "next/navigation";
 import SinglePost from "@/components/SinglePost";
+import Post from "@/components/Post";
 var jwt = require('jsonwebtoken');
 export default function Home({ params }) {
   const { postId } = params;
@@ -30,11 +31,9 @@ export default function Home({ params }) {
   const checkIsAccountLogin = async () => {
 
     let key = process.env.NEXT_PUBLIC_JWT_TOKEN;
-    // console.log(`JWT TOKEN: ${key}`)
     var token = localStorage.getItem("token")
     if (token != null) {
       var verification = await jwt.decode(token, key);
-      // console.log(verification)
       if (verification == null) {
         router.push("/login")
       }
@@ -52,8 +51,6 @@ export default function Home({ params }) {
     const data = {
       postId: postId,
     };
-    // console.log("Checking for Existing Fusion using: ");
-    // console.log(data);
     fetch(`/api/posts/get-single-post`, {
       method: "POST",
       headers: {
@@ -74,22 +71,20 @@ export default function Home({ params }) {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && (
         <center>
           <span className="my-10 text-center loading loading-dots loading-lg"></span>
         </center>
-      ) : (
-        ""
       )}
 
 
       <div className='flex justify-center items-center flex-col'>
 
         {
-          isLoading == false ? (
-            <SinglePost postId={postContent._id} createdAt={postContent.createdAt} Username={postContent.username} caption={postContent.caption} likes={postLikes} postType={postContent.postType} attachments={postAttachments} />
+          isLoading && (
+            <Post postId={postContent._id} createdAt={postContent.createdAt} Username={postContent.username} caption={postContent.caption} likes={postLikes} postType={postContent.postType} attachments={postAttachments} />
 
-          ) : ""
+          )
         }
 
 

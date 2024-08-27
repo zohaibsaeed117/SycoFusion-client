@@ -7,7 +7,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaCirclePlus } from "react-icons/fa6";
 var jwt = require("jsonwebtoken");
 import "react-toastify/dist/ReactToastify.css";
-
+import { Menu, SeparatorHorizontal } from "lucide-react";
+import { Button } from "./ui/button";
+import ResponsiveNavDrawer from "./ResponsiveNavDrawer";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AvatarDropDown } from "./AvatarDropDown";
 const Navbar = () => {
   const {
     isAlert,
@@ -27,13 +31,14 @@ const Navbar = () => {
     UserId
   } = useUserStore();
 
+  const [isOpen, setIsOpen] = useState(false)
+
   const tokenVerification = async () => {
     let key = process.env.NEXT_PUBLIC_JWT_TOKEN;
 
     var token = localStorage.getItem("sycofusion_token");
     if (token != null) {
       var verification = await jwt.decode(token, key);
-      console.log(verification)
 
       if (verification != null) {
         setIsLogin(true);
@@ -93,9 +98,9 @@ const Navbar = () => {
   return (
     <>
       <ToastContainer
-      style={{
-        zIndex: 100
-      }}
+        style={{
+          zIndex: 100
+        }}
         position="bottom-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -107,76 +112,34 @@ const Navbar = () => {
         pauseOnHover
         theme="dark"
       />
-      <div>
-        <div className="navbar bg-base-100">
-          <div className="navbar-start">
-            <div className="dropdown">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost lg:hidden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
-                  />
-                </svg>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <Link href={"/"}>Home</Link>
-                </li>
-                <li>
-                  <Link href={"/posts"}>Feed</Link>
-                </li>
-
-                <li>
-                  <Link href={"/about"}>About</Link>
-                </li>
-
-                <li>
-                  <Link href={"/contact"}>Contact</Link>
-                </li>
-              </ul>
-            </div>
-            <Link href={"/"} className="btn btn-ghost text-xl">
-              <Image width={50} height={50} src={"/logo.png"} />
-            </Link>
+      <div className='bg-background text-foreground flex w-full justify-between font-roboto shadow-md'>
+        <Link href={"/"} className="ml-4">
+          <Image width={60} height={60} src={"/logo.png"} />
+        </Link>
+        <nav className='hidden justify-end w-[70%] lg:flex'>
+          <ul className='flex text-secondary-200 items-center justify-between lg:py-4 gap-x-4'>
+            <li><a className="hover:text-foreground/60 transition-colors" href="/">Home</a></li>
+            <li><a className="hover:text-foreground/60 transition-colors" href="/posts">Feed</a></li>
+            <li><a className="hover:text-foreground/60 transition-colors" href="/about">About</a></li>
+            <li><a className="hover:text-foreground/60 transition-colors" href="/contact">Contact</a></li>
+            <SeparatorHorizontal orientation="vertical" className="w-[2px] bg-muted-foreground" />
+          </ul>
+          <div className="flex items-center justify-center mx-4">
+            {
+              isLogin
+                ? <>
+                  <AvatarDropDown logout={logout} userName={Username} />
+                </> :
+                <div className="flex gap-x-4">
+                  <Button asChild><Link href="/login">Login</Link></Button>
+                  <Button variant="secondary" asChild><Link href="/signup">Signup</Link></Button>
+                </div>
+            }
           </div>
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-              <li>
-                <Link href={"/"}>Home</Link>
-              </li>
-              <li>
-                <Link href={"/posts"}>Feed</Link>
-              </li>
-
-              <li>
-                <Link href={"/about"}>About</Link>
-              </li>
-
-              <li>
-                <Link href={"/contact"}>Contact</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="navbar-end">
+          {/* <div className='flex items-center justify-center gap-x-2 mx-2'>
             {isLogin ? (
               <>
-              <Link href={"/posts/add-post"}><FaCirclePlus className="icon mx-5 text-4xl text-red-500" /></Link>
+                <Link href={"/posts/add-post"}><FaCirclePlus className="icon mx-5 text-4xl text-red-500" /></Link>
                 <div className="dropdown dropdown-end">
                   <div
                     tabIndex={0}
@@ -184,7 +147,7 @@ const Navbar = () => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                    <img src={`https://ui-avatars.com/api/?name=${Username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
+                      <img src={`https://ui-avatars.com/api/?name=${Username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
 
                     </div>
                   </div>
@@ -217,7 +180,13 @@ const Navbar = () => {
                 </Link>
               </>
             )}
-          </div>
+          </div> */}
+        </nav>
+        <div className='lg:hidden'>
+          <Button asChild variant="ghost" size="icon" className='m-4 block lg:hidden' onClick={() => setIsOpen(!isOpen)}>
+            <Menu />
+          </Button>
+          <ResponsiveNavDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </div>
     </>

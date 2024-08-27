@@ -35,11 +35,9 @@ export default function Home({ params }) {
 
   const checkIsAccountLogin = async () => {
     let key = process.env.NEXT_PUBLIC_JWT_TOKEN;
-    // console.log(`JWT TOKEN: ${key}`)
     var token = localStorage.getItem("sycofusion_token");
     if (token != null) {
       var verification = await jwt.decode(token, key);
-      // console.log(verification)
 
       if (verification == null) {
         router.push("/login");
@@ -85,9 +83,7 @@ export default function Home({ params }) {
 
     const responseData = await response.json();
     setUserData(responseData.data.user);
-    console.log(responseData.data.user);
 
-    console.log(responseData.data.user?.firstName);
     SetFirstName(responseData.data.user?.firstName);
     SetLastName(responseData.data.user?.lastName);
     setEmail(responseData.data.user?.email);
@@ -131,13 +127,11 @@ export default function Home({ params }) {
         setAlertMsg(data.message);
         if (data.type == "success") {
           var succ = localStorage.setItem("token", data.token);
-          console.log(succ);
 
           var verification = jwt.decode(
             data.token,
             process.env.NEXT_PUBLIC_JWT_TOKEN
           );
-          console.log(verification);
         }
         setFirstName(firstName);
         setLastName(lastName);
@@ -146,7 +140,6 @@ export default function Home({ params }) {
       });
   };
   const handleUploadFile = async (file) => {
-    console.log(`File: ${file}`);
     if (file) {
       // setUploadProgressCaption("Uploading...")
       const name = file.name;
@@ -176,7 +169,6 @@ export default function Home({ params }) {
             //url is download url of file
             setDownloadURL(url);
             SetAvatar(url);
-            console.log(url);
           });
         }
       );
@@ -187,15 +179,11 @@ export default function Home({ params }) {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    console.log(`Selected: ${file}`);
     if (file) {
-      console.log(file);
       setSelectedFile(file);
-      console.log("Selected file:", file.name);
     }
 
     if (file && file.size < 5000000) {
-      console.log(file);
       setSelectedFile(file);
       await handleUploadFile(file);
     } else {

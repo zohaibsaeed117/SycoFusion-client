@@ -1,9 +1,17 @@
-import { Inter } from "next/font/google";
+import { Inter, Lato, Poppins } from "next/font/google";
 import "@/css/globals.css";
 import Navbar from "@/components/Navbar";
 import NextTopLoader from 'nextjs-toploader';
 import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
+});
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "900"]
+});
 
 export const metadata = {
   title: "Home - SycoFusion",
@@ -12,10 +20,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html data-theme="light" lang="en">
+    <html lang="en">
       <body className={inter.className}>
-        <Navbar/>
-        <NextTopLoader />
+        <Navbar />
+        <NextTopLoader
+          showSpinner={false}
+
+        />
         {/* <NextTopLoader
   color="#2299DD"
   initialPosition={0.08}
@@ -28,7 +39,7 @@ export default function RootLayout({ children }) {
   shadow="0 0 10px #2299DD,0 0 5px #2299DD"
 /> */}
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

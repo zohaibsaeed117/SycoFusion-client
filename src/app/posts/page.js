@@ -1,4 +1,5 @@
 "use client";
+import AddPost from '@/components/AddPost';
 import Post from '@/components/Post'
 import Image from 'next/image'
 import Link from 'next/link';
@@ -16,43 +17,39 @@ export default function Home() {
 
 
 
-  const fetchProjects = async() => {
-    console.log("Total Projects: ", totalPosts, " Current Posts: ", currentPosts)
+  const fetchProjects = async () => {
     setIsLoading(true)
-    // console.log("Fetching more....")
-   
 
-    await fetch(`/api/posts/feed-posts-infinite`,{
+
+    await fetch(`/api/posts/feed-posts-infinite`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({page: page})
+      body: JSON.stringify({ page: page })
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      // console.log(`Expression: ${allPosts.length+data.posts.length} - ${totalPosts}`)
-      setTotalPosts(data.allPostsLength)
-      let len = (data.posts).length;
-      setCurrentPosts(currentPosts+len)
+      .then(res => res.json())
+      .then(data => {
+        setTotalPosts(data.allPostsLength)
+        let len = (data.posts).length;
+        setCurrentPosts(currentPosts + len)
 
-   
-    setAllPosts((prevPosts) => [...prevPosts, ...data.posts])
 
-    if (allPosts.length == totalPosts) {
-      setIsMore(false)
-    }
-    else {
-      setIsMore(true)
-    }
-    setPage(page + 1);
+        setAllPosts((prevPosts) => [...prevPosts, ...data.posts])
 
-    setIsLoading(false)
-  
-    })
+        if (allPosts.length == totalPosts) {
+          setIsMore(false)
+        }
+        else {
+          setIsMore(true)
+        }
+        setPage(page + 1);
 
-    
+        setIsLoading(false)
+
+      })
+
+
 
   }
 
@@ -60,53 +57,53 @@ export default function Home() {
     const res = await fetch('/api/projects/get-projects')
     const { projects } = await res.json()
     setProjects(projects);
-    setIsLoading(false);  
+    setIsLoading(false);
   }
 
   useEffect(() => {
     fetchProjects();
   }, [])
-  
-    return (
-      <>
+
+  return (
+    <>
       {/* <div className='flex justify-center items-center'>
       <Link href={"/posts"} className='btn btn-primary mx-2'>For You</Link>
       <Link href={"/posts/following"} className='btn btn-secondary'> Following</Link>
 
       </div> */}
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className='text-4xl p-10 text-center font-bold my-10'>Latest Posts</h1>
-      
-      <div className='flex justify-center items-center flex-col'>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-y-4 mt-4">
+        <AddPost />
+
+        <div className='flex justify-center items-center flex-col'>
+          {
+            allPosts.map((project, index) => {
+              return <Post key={project._id + index} postId={project._id} createdAt={project.createdAt} username={project.username} caption={project.caption} likes={project.likes} postType={project.postType} attachments={project.attachments} />
+
+            })
+          }
+        </div>
+
         {
-          allPosts.map((project, index) => {
-            return       <Post key={project._id+index} postId={project._id} createdAt={project.createdAt} username={project.username} caption={project.caption} likes={project.likes} postType={project.postType} attachments={project.attachments}/>
+          isLoading ? (
+            <span className="loading loading-ring loading-lg"></span>
+          ) : null
+        }
+        {
+          isLoading == false && isMore ? (
+            <div className='flex justify-center items-center'>
+              <button className='my-10 btn redBtn btn-primary' onClick={fetchProjects}>Load More...</button>
+            </div>
+          ) : null
+        }
 
-          })
+
+
+        {
+          isLoading == false && isMore == false ? (
+            <h1 className='my-10 text-center font-bold'>You have seen all posts 👏</h1>
+          ) : null
         }
       </div>
-
-      {
-        isLoading ?(
-          <span className="loading loading-ring loading-lg"></span>
-          ):null
-        }
-      {
-  isLoading==false&&isMore?(
-    <div className='flex justify-center items-center'>
-      <button className='my-10 btn redBtn btn-primary' onClick={fetchProjects}>Load More...</button>
-      </div>
-  ):null
-}
-
-
-
- {
-  isLoading==false&&isMore==false?(
-    <h1 className='my-10 text-center font-bold'>You have seen all posts 👏</h1>
-    ):null
-  }
-    </div>
-  </>
+    </>
   )
 }

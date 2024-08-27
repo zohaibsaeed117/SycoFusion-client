@@ -37,11 +37,9 @@ function page({params}) {
       .then(res => res.json())
       .then(data => {
         
-        console.log(data)
         if (data.type == "success") {
           
           setPosts(data.posts)
-          console.log(data)
           setIsLoading(false)
           
         }
@@ -59,10 +57,8 @@ function page({params}) {
       .then(res => res.json())
       .then(data => {
         
-        console.log(data)
         if (data.type == "success") {
           setUserData(data.data);
-          console.log(data.data);
           setFollowers(data.data.user.followers.length);
           const skills = data.data.user?.skills;
           const SkillsArr = skills.split(",");

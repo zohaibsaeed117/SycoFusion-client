@@ -7,7 +7,7 @@ const postSchema = new Schema({
   caption: { type: String },
   likes: [{ type: String }],
   isBlocked: { type: Boolean },
-  postType: {type: String},
+  postType: { type: String },
   attachments: [{
     url: {
       type: String,

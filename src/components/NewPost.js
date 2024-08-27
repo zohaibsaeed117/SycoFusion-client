@@ -69,7 +69,6 @@ function NewPost() {
     <div className="flex justify-center items-center flex-col border py-5 px-20 rounded-2xl w-[70%]">
   <select defaultValue={"Daily"} onChange={(e)=> {
     setPostType(e.target.value);
-    console.log(e.target.value)
   }} className="select select-ghost w-full max-w-xs">
     <option value={"Daily Post"}>Daily Post</option>
     <option value={"Achievement"}>Achievement</option>

@@ -27,7 +27,6 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
 
 
     const deleteComment = async(ID) => {
-        console.log("Deleting Comment");
         const res = await fetch('/api/comments/delete-comment', {
             method: "POST",
             headers: {
@@ -36,7 +35,6 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
             body: JSON.stringify({ commentId: ID })
         })
         const result = await res.json();
-        console.log(result);
         setIsAlert(true);
         setAlertMsg(result.message);
         setAlertType(result.type);
@@ -99,7 +97,6 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
             message: message,
             replyTo: replyTo
         }
-        console.log(data)
         fetch(`/api/comments/new-comment`, {
             method: "POST",
             headers: {
@@ -109,7 +106,6 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 setIsAlert(true);
                 setAlertMsg(data.message);
                 setAlertType(data.type);
@@ -142,7 +138,6 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
             }
 
       const result = await response.json();
-    //   console.log(result);
       setPostData(result.post[0]);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -239,7 +234,6 @@ const PostModal = ({ postId, handleLike, totalLikes}) => {
             <div className='my-2'>
                {
                 comments.map((comment, index)=> {
-                  console.log(comment.message, ": ", comment.isReply)
                   
                       
                             return (

@@ -7,7 +7,6 @@ const Post = ({postId, createdAt, username, caption, likes, postType, attachment
     const { Username, UserId, setAlertMessage, setAlertType, setIsAlert } = useUserStore();
 
     const blockUser = async() => {
-        console.log('Blocked User');
         //finding id of user to block
         const response = await fetch(`/api/users/getUserId`, {
             method: "POST",

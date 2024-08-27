@@ -17,9 +17,7 @@ export default function Home() {
 
 
   const fetchProjects = async() => {
-    console.log("Total Projects: ", totalPosts, " Current Posts: ", currentPosts)
     setIsLoading(true)
-    // console.log("Fetching more....")
    
 
     await fetch(`/api/posts/feed-posts-infinite`,{
@@ -31,8 +29,6 @@ export default function Home() {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
-      // console.log(`Expression: ${allPosts.length+data.posts.length} - ${totalPosts}`)
       setTotalPosts(data.allPostsLength)
       let len = (data.posts).length;
       setCurrentPosts(currentPosts+len)

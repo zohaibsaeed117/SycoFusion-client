@@ -26,7 +26,6 @@ const ImgInput = () => {
 }
 
   const handleUploadFile = async(file) => {
-    // console.log(`File: ${file}`)
     if (file) {
       setUploadProgressCaption("Uploading...")
       const name = file.name

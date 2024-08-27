@@ -75,7 +75,6 @@ function NewPost({ PostData }) {
       <div className="flex justify-center items-center border-primary flex-col border px-5 py-5 rounded-2xl w-[100%] sm:px-10">
         <select defaultValue={"Daily"} onChange={(e) => {
           setPostType(e.target.value);
-          console.log(e.target.value)
         }} className="select select-primary w-full max-w-xs">
           <option value={"Daily Post"}>Daily Post</option>
           <option value={"Achievement"}>Achievement</option>
