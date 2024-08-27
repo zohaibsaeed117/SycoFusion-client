@@ -28,7 +28,7 @@ export default function () {
       "username": username,
       "password": password
     }
-    fetch(`/api/auth/login`, {
+    fetch(`http://localhost:8080/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

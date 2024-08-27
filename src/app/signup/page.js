@@ -24,8 +24,8 @@ export default function () {
   const createAccount = () => {
     setLoading(true)
 
-    fetch(`/api/auth/signup`, {
-      method: "POST",
+    fetch(`http://localhost:8080/signup`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
