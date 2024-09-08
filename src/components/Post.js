@@ -20,7 +20,7 @@ const Post = ({ postId, createdAt, comments, username, caption, likes, postIsLik
 
     const handleLike = async () => {
         try {
-            const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/post/like', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/like`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`,
@@ -48,7 +48,7 @@ const Post = ({ postId, createdAt, comments, username, caption, likes, postIsLik
             return
         }
         try {
-            const response = await fetch("${process.env.NEXT_PUBLIC_API_URL}/post/add-comment", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/add-comment`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("sycofusion_token")}`,

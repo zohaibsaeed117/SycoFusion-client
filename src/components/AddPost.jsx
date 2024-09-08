@@ -103,7 +103,7 @@ const AddPost = () => {
         }
 
         try {
-            const data = await fetch('${process.env.NEXT_PUBLIC_API_URL}/post/add-post', {
+            const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/add-post`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
