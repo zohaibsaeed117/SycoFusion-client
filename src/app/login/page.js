@@ -20,7 +20,7 @@ export default function () {
   const [isLoading, setIsloading] = useState(false)
   const router = useRouter();
 
-  const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setFirstName, setLastName, setUsername, setAvatar, Username, setUserId } = useUserStore();
+  const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setUser } = useUserStore();
 
 
   const login = () => {
@@ -28,7 +28,7 @@ export default function () {
       "username": username,
       "password": password
     }
-    fetch(`http://localhost:8080/login`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,18 +37,21 @@ export default function () {
     })
       .then(res => res.json())
       .then(data => {
-        setAlertMsg(data.message);
-        setIsAlert(true);
-        setAlertType(data.type);
-        if (data.type == "success") {
+        if (data.success) {
+          setAlertType('success');
+          setIsAlert(true);
+          setAlertMsg(data.message);
           setIsLogin(true)
-          setFirstName(data.firstName)
-          setLastName(data.lastName)
-          setAvatar(data.avatar)
-          setUsername(data.username)
-          setUserId(data.userId)
+          setUser(data.user)
+          console.log("Setting user to local", data.user)
+          localStorage.setItem("sycofusion_user", JSON.stringify(data.user))
           localStorage.setItem("sycofusion_token", data.token);
           router.push("/posts");
+        }
+        else {
+          setAlertType('error');
+          setIsAlert(true);
+          setAlertMsg(data.message);
         }
 
 
@@ -75,7 +78,7 @@ export default function () {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" onClick={login} disabled={isLoading}>{isLoading ? <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+          <Button className="w-full" onClick={login} disabled={isLoading}>{isLoading ? <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
           </svg> : "Sign in"}</Button>
         </CardFooter>
       </Card>

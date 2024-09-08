@@ -2,15 +2,15 @@ import React from 'react'
 
 const Faqs = () => {
   return (
-    <div class="space-y-4">
-  <details class="group rounded-lg bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden" open>
-    <summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
-      <h2 class="font-medium">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
+    <div className="space-y-4">
+  <details className="group rounded-lg bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden" open>
+    <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+      <h2 className="font-medium">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
 
-      <span class="relative h-5 w-5 shrink-0">
+      <span className="relative h-5 w-5 shrink-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute inset-0 h-5 w-5 opacity-100 group-open:opacity-0"
+          className="absolute inset-0 h-5 w-5 opacity-100 group-open:opacity-0"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -25,7 +25,7 @@ const Faqs = () => {
 
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute inset-0 h-5 w-5 opacity-0 group-open:opacity-100"
+          className="absolute inset-0 h-5 w-5 opacity-0 group-open:opacity-100"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -40,21 +40,21 @@ const Faqs = () => {
       </span>
     </summary>
 
-    <p class="mt-4 leading-relaxed text-gray-700">
+    <p className="mt-4 leading-relaxed text-gray-700">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa in,
       recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
       consequuntur distinctio corporis earum similique!
     </p>
   </details>
 
-  <details class="group rounded-lg bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
-    <summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
-      <h2 class="font-medium">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
+  <details className="group rounded-lg bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
+    <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+      <h2 className="font-medium">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
 
-      <span class="relative h-5 w-5 shrink-0">
+      <span className="relative h-5 w-5 shrink-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute inset-0 opacity-100 group-open:opacity-0"
+          className="absolute inset-0 opacity-100 group-open:opacity-0"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -69,7 +69,7 @@ const Faqs = () => {
 
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute inset-0 opacity-0 group-open:opacity-100"
+          className="absolute inset-0 opacity-0 group-open:opacity-100"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -84,7 +84,7 @@ const Faqs = () => {
       </span>
     </summary>
 
-    <p class="mt-4 leading-relaxed text-gray-700">
+    <p className="mt-4 leading-relaxed text-gray-700">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa in,
       recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis explicabo
       consequuntur distinctio corporis earum similique!

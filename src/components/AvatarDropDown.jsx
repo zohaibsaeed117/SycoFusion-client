@@ -33,16 +33,18 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import Link from "next/link"
+import { useUserStore } from "@/store/store"
 
 
 export function AvatarDropDown({ logout, userName }) {
+    const { user } = useUserStore()
     return (
         <DropdownMenu >
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
                     <Avatar>
-                        <AvatarImage src="https://github.com/zohaibsaeed117.png" />
-                        <AvatarFallback>ZS</AvatarFallback>
+                        <AvatarImage src={user?.avatar} />
+                        <AvatarFallback>{user ? (user.firstName[0] + user.lastName[0]) : 'AZ'}</AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>

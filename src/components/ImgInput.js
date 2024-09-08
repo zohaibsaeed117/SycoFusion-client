@@ -4,7 +4,7 @@ import "../css/globals.css";
 // import "../css/new-post.css";
 import { ImFilePicture } from "react-icons/im";
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import {storage} from "../firebase/firebaseStorage"
+import { storage } from "../firebase/firebaseStorage"
 import Image from 'next/image';
 
 
@@ -12,20 +12,20 @@ import { useUserStore } from '@/store/store';
 
 const ImgInput = () => {
 
-  const {setAttachments, attachments,setUploadProgressCaption, attachmentProgress, setAttachmentProgress} = useUserStore();
-  
+  const { setAttachments, attachments, setUploadProgressCaption, attachmentProgress, setAttachmentProgress } = useUserStore();
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [downloadURL, setDownloadURL] = useState("")
   const fileInputRef = useRef(null);
 
-  function doOpen(){
-  
-      imgFile.click();
-    
-}
+  function doOpen() {
 
-  const handleUploadFile = async(file) => {
+    imgFile.click();
+
+  }
+
+  const handleUploadFile = async (file) => {
     if (file) {
       setUploadProgressCaption("Uploading...")
       const name = file.name
@@ -38,7 +38,7 @@ const ImgInput = () => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
 
-            setAttachmentProgress(progress) // to show progress upload
+          setAttachmentProgress(progress) // to show progress upload
 
           switch (snapshot.state) {
             case 'paused':
@@ -57,7 +57,7 @@ const ImgInput = () => {
             //url is download url of file
             setDownloadURL(url)
             // console.log(url)
-            setAttachments({type: "image",url: url})
+            setAttachments({ type: "image", url: url })
             // console.log(attachments)
             setUploadProgressCaption("Uploaded")
           })
@@ -69,10 +69,10 @@ const ImgInput = () => {
   }
 
   const handleFileChange = async (e) => {
-      const file = e.target.files[0];
-      console.log(`Selected: ${file}`)
-      if (file) {
-    // console.log(file)
+    const file = e.target.files[0];
+    console.log(`Selected: ${file}`)
+    if (file) {
+      // console.log(file)
       setSelectedFile(file);
       // console.log("Selected file:", file.name);
     }
@@ -85,12 +85,12 @@ const ImgInput = () => {
       console.error('File size to large')
       setUploadProgressCaption("You can upload image less than 5 MB")
     }
-  
+
   };
 
   return (
     <div >
-       <input
+      <input
         type="file"
         htmlFor="imgFile"
         accept=".jpg,.png,.jpeg,.gif"
@@ -99,14 +99,14 @@ const ImgInput = () => {
         disabled={attachments.length === 5}
         style={{ display: 'none' }}
       />
-    <label onClick={doOpen} style={{ display: 'inline-block', cursor: 'pointer', padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}>
-     
-      <span >
-        <ImFilePicture className="icon" />
-      </span>
-    </label>
-  </div>
-  
+      <label onClick={doOpen} style={{ display: 'inline-block', cursor: 'pointer', padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}>
+
+        <span >
+          <ImFilePicture className="icon" />
+        </span>
+      </label>
+    </div>
+
   );
 };
 

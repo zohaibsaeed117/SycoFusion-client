@@ -7,9 +7,11 @@ import { Input } from './ui/input'
 import { IoMdSearch } from 'react-icons/io'
 import Link from 'next/link'
 import { Menu } from 'lucide-react'
+import { useUserStore } from '@/store/store'
 
 const ResponsiveNavDrawer = ({ isOpen, setIsOpen }) => {
     const drawerRef = useRef();
+    const { user } = useUserStore();
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (drawerRef.current && !drawerRef.current.contains(event.target)) {
@@ -38,8 +40,8 @@ const ResponsiveNavDrawer = ({ isOpen, setIsOpen }) => {
             {true &&
                 (<div className='flex flex-col items-center justify-center mt-8 gap-y-4'>
                     <Avatar>
-                        <AvatarImage src="https://github.com/zohaibsaeed117.png" alt="@zohaibsaeed117" />
-                        <AvatarFallback>ZS</AvatarFallback>
+                        <AvatarImage src={user?.avatar} />
+                        <AvatarFallback>{user ? (user.firstName[0] + user.lastName[0]) : 'AZ'}</AvatarFallback>
                     </Avatar>
                     <div>
                         Zohaib Saeed

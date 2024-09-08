@@ -1,7 +1,3 @@
-import Login from "@/components/Login";
-import Navbar from "../components/Navbar";
-import Signup from "@/components/Signup";
-import Post from "@/components/PostFeedView";
 import HeroSection from "@/components/HeroSection";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";

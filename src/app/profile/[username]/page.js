@@ -1,203 +1,135 @@
 "use client"
-import React, {useEffect, useState} from 'react'
-import ProfileView from '@/components/ProfileView';
-import Link from 'next/link';
-import { useUserStore } from '@/store/store';
-import {AiFillGithub} from "react-icons/ai";
-import {BsTwitter} from "react-icons/bs";
-import {BsLinkedin} from "react-icons/bs";
-import {GrYoutube} from "react-icons/gr";
-import {FaMedium} from "react-icons/fa";
-import Post from "@/components/Post";
-function page({params}) {
-    const {username} = params;
-    const {Username} = useUserStore();
-    const [userData, setUserData] = useState({});
-    const [followers, setFollowers] = useState(0)
-    const [fullName, setFullName] = useState("")
-    const [following, setFollowing] = useState(0);
-    const [posts, setPosts] = useState([]);
-    const [skills, setSkills] = useState([]);
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Camera, FacebookIcon, GithubIcon, InstagramIcon, LinkedinIcon, PencilOff, Settings2, TwitterIcon, } from 'lucide-react'
+import { Button, buttonVariants } from '@/components/ui/button'
+import Post from '@/components/Post'
+import Loader from "@/components/Loader"
+import { useUserStore } from '@/store/store'
+import ProfileModal from '@/components/ProfileModal'
+import Link from 'next/link'
+function page({ params }) {
+  const { username } = params
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [github, setGithub] = useState("");
-    const [twitter, setTwitter] = useState("");
-    const [linkedin, setLinkedin] = useState("");
-    const [youtube, setYoutube] = useState("");
-  
-    const getUserPosts = async() => {
-      setIsLoading(true);
-      await fetch(`/api/posts/getProfilePosts`,{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({username: username})
-      })
-      .then(res => res.json())
-      .then(data => {
-        
-        if (data.type == "success") {
-          
-          setPosts(data.posts)
-          setIsLoading(false)
-          
-        }
-      })
-    }
-    const getUserData = async() => {
-     
-      await fetch(`/api/users/getUserData`,{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({username: username})
-      })
-      .then(res => res.json())
-      .then(data => {
-        
-        if (data.type == "success") {
-          setUserData(data.data);
-          setFollowers(data.data.user.followers.length);
-          const skills = data.data.user?.skills;
-          const SkillsArr = skills.split(",");
-          setSkills(SkillsArr);
-          setFollowing(data.data.user.following.length);
-          setFullName(data.data.user.firstName+ " " + data.data.user.lastName)
-          setGithub(data.data.user.socialLinks[0]?.url);
-          setTwitter(data.data.user.socialLinks[1]?.url);
-          setLinkedin(data.data.user.socialLinks[2]?.url);
-          setYoutube(data.data.user.socialLinks[3]?.url);
-         setIsLoading(false)
-        
-        }
-      })
-      
-    }
+  const { setIsAlert, setAlertMsg, setAlertType, user } = useUserStore()
 
 
-    useEffect(() => {
-      getUserData();
-      getUserPosts();
-    }, [])
-    
-    return (
-        <div>
-       
-       {isLoading?<center><span className="my-10 text-center loading loading-dots loading-lg"></span></center>: ""}
-    
-       {
-         isLoading?"":(
-         <>
-         <h1 className='mx-10 text-center text-3xl font-bold'>
-     {username}'s Profile View Page
-       </h1>
-    
-    
-       <div className='my-10 flex justify-around items-center'>
-         <ProfileView username={username} fullName={fullName} followers={followers} following={following} posts={userData.posts}/>
-          
-       </div>
-    
-        <div
-        style={
-          {
-            marginTop: "20px",
-            padding: "50px"
-          }
-        }
-        className='flex justify-between items-center'>
-        <h1 style={{
-          fontSize: "2rem"
-        }} className='my-10 font-bold'>Skills 🛠</h1>
-        <div className='flex justify-center items-center flex-col md:flex-row'>
-         
-        {/* <button onClick={threeDMapView} className='my-5 btn redOutlineBtn'>3D View</button>
-        <button onClick={twoDMapView} className='btn redBtn sm:btn'>Simple View</button> */}
-        </div>
-        </div>
-        <div className='ml-10'>
+  const [isLoading, setIsLoading] = useState(true)
+  const [userData, setUser] = useState({})
+  const [isOurProfile, setIsOurProfile] = useState(false)
+  const getUserData = async () => {
+    setIsLoading(true)
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${username}`,
         {
-           skills.map((skill, index) => {
-            return <div key={index} className="mx-2 badge badge-primary">{skill}</div>
-            })
-          }
-        </div>
-      
-        <div
-        style={
-          {
-            marginTop: "20px",
-            padding: "50px"
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
           }
         }
-        className='flex justify-between items-center'>
-        <h1 className='my-10 text-3xl font-bold'>Posts 📝</h1>
-        <Link href={`/profile/${username}/posts`}>Show All</Link>
-        </div>
-
-        {
-
-        }
-    
-    {
-      isLoading==false&&posts.length==0?(
-        <h1 className='text-center font-bold text-2xl'>No Posts to show</h1>
-      ):null
-    }
-        <div className='flex justify-center items-center flex-col'>
-        {
-          posts.map((project, index) => {
-            return       <Post key={project._id+index} postId={project._id} createdAt={project.createdAt} username={project.username} caption={project.caption} likes={project.likes} postType={project.postType} attachments={project.attachments}/>
-
-          })
-        }
-      </div>
-    
-    
-    
-    
- 
-     
-    
-        <div
-        style={
-          {
-            marginTop: "20px",
-            padding: "50px"
-          }
-        }
-        className='flex justify-between items-center'>
-        <h1 className='my-10 text-3xl font-bold'>Connect ✉</h1>
-        <div>
-          {
-            username == Username?<Link href={`/profiles/settings/portfolio`} className='mx-4 btn redBtn'>Edit</Link>:""
-          }
-        </div>
-        </div>
-    
-       
-    
-        <div className='my-10 flex justify-around items-center text-5xl'>
-        
-            <a href={github} target='_blank'><AiFillGithub className='social-icon github'/></a>
-          <a href={twitter} target='_blank'><BsTwitter className='social-icon twitter'/></a>
-          <a href={linkedin} target='_blank'><BsLinkedin className='social-icon linkedin'/></a>
-          <a href={youtube} target='_blank'><GrYoutube className='social-icon youtube'/></a>
-       
-        
-        </div>
-    
-    
-     
-    
-         </>
-         )
-    
-       }
-          </div>
       )
+        .then(res => res.json())
+
+      console.log(response)
+
+      if (response.success) {
+        setUser(response.user)
+        setIsOurProfile(response.isOurProfile)
+      }
+      else {
+        setIsAlert(true)
+        setAlertType("error")
+        setAlertMsg(response.message)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  function validateAndNormalizeUrl(url) {
+    // Trim any leading or trailing spaces
+    url = url.trim();
+
+    // Check if the URL already starts with http:// or https://
+    if (!/^https?:\/\//i.test(url)) {
+      // If not, prepend https:// to the URL
+      url = 'https://' + url;
+    }
+
+    // Return the normalized URL
+    return url;
+  }
+  useEffect(() => {
+    getUserData();
+  }, [])
+  return (
+    <>
+      {isLoading ? <Loader /> :
+        <div className='min-h-[90vh]'>
+          <div className='w-full md:w-[80vw] border mx-auto rounded-3xl'>
+            <Image src="/cover.png" alt="Zohaib Saeed Cover Photo" height={400} width={1584} className='w-full object-contain object-center bg-accent max-h-60' />
+            <div className='flex items-center justify-between flex-col md:flex-row gap-y-4'>
+              <div className='flex items-start md:ml-10 justify-center flex-col'>
+                <Avatar className="relative z-0 h-28 w-28 md:h-40 md:w-40 md:-mt-20 -mt-10 border-4 border-background overflow-visible">
+                  <AvatarImage src={userData?.avatar} className="rounded-full object-top" />
+                  <AvatarFallback className="text-5xl">ZS</AvatarFallback>
+                  {isOurProfile && <ProfileModal />}
+                </Avatar>
+                <div className='flex items-center justify-center flex-col'>
+                  <h1 className='text-xl font-semibold'>{userData?.firstName + " " + userData?.lastName}</h1>
+                  <span className='text-base font-light '>{userData?.username}</span>
+                </div>
+              </div>
+              <div className='flex gap-x-3 mx-auto'>
+                <p className='flex items-center jusify-center flex-col bg-secondary text-secondary-foreground p-2 md:p-4 rounded-2xl'>
+                  <span className='text-base md:text-xl'>Followers</span>
+                  <span>{userData?.followers?.length}</span>
+                </p>
+                <p className='flex items-center jusify-center flex-col bg-secondary text-secondary-foreground p-2 md:p-4 rounded-2xl'>
+                  <span className='text-base md:text-xl'>Posts</span>
+                  <span>{userData?.posts?.length}</span>
+                </p>
+                <p className='flex items-center jusify-center flex-col bg-secondary text-secondary-foreground p-2 md:p-4 rounded-2xl'>
+                  <span className='text-base md:text-xl'>Following</span>
+                  <span>{userData?.following?.length}</span>
+                </p>
+              </div>
+              <div className='flex items-center justify-center gap-x-4 md:mr-10 mx-auto'>
+                {
+
+                  userData?.socialLinks?.linkedin && <Link href={validateAndNormalizeUrl(userData?.socialLinks?.linkedin)} target='_blank' className={`${buttonVariants({ variant: "ghost", size: "icon" })} hover:text-blue-600}`}><LinkedinIcon /></Link>
+                }
+                {
+
+                  userData?.socialLinks?.instagram && <Link href={validateAndNormalizeUrl(userData?.socialLinks?.instagram)} target='_blank' className={buttonVariants({ variant: "ghost", size: "icon" }) + "hover:text-pink-700"}><InstagramIcon /></Link>
+                }
+                {
+
+                  userData?.socialLinks?.facebook && <Link href={validateAndNormalizeUrl(userData?.socialLinks?.facebook)} target='_blank' className={buttonVariants({ variant: "ghost", size: "icon" }) + "hover:text-blue-900"}><FacebookIcon /></Link>
+                }
+                {
+
+                  userData?.socialLinks?.github && <Link href={validateAndNormalizeUrl(userData?.socialLinks?.github)} target='_blank' className={buttonVariants({ variant: "ghost", size: "icon" }) + "hover:text-gray-600"}><GithubIcon /></Link>
+                }
+                {
+
+                  userData?.socialLinks?.twitter && <Link href={validateAndNormalizeUrl(userData?.socialLinks?.twitter)} target='_blank' className={buttonVariants({ variant: "ghost", size: "icon" }) + "hover:text-sky-600"}><TwitterIcon /></Link>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className='flex items-center justify-center flex-col gap-y-6 mt-4'>
+            {userData?.posts?.map((project, index) => <Post key={project?._id + index} postId={project?._id} createdAt={project?.createdAt} username={userData.username} caption={project?.caption} likes={project?.likes} postType={project?.postType} attachments={project?.attachments} postIsLiked={project.isLiked} comments={project?.comments} />)}
+          </div>
+
+        </div >}
+    </>
+  )
 }
 
 export default page

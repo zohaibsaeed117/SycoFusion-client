@@ -4,12 +4,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from './ui/button';
 import Image from 'next/image'
-import { ChevronDownSquareIcon, ImageIcon } from 'lucide-react';
+import { ImageIcon } from 'lucide-react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useUserStore } from '@/store/store';
 
 const AddPost = () => {
 
+    const { user } = useUserStore();
 
     const { setIsAlert, setAlertMsg, setAlertType } = useUserStore();
 
@@ -17,6 +18,7 @@ const AddPost = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [caption, setCaption] = useState('');
+    const [images, setImages] = useState([])
     const [previewSrc, setPreviewSrc] = useState([]);
 
 
@@ -76,6 +78,7 @@ const AddPost = () => {
         });
 
         if (files.length <= 5 && previewSrc.length + files.length <= 5) {
+            setImages(event.target.files)
             Promise.all(newPreviewSrcsPromises).then(newPreviews => {
                 setPreviewSrc(prev => [...prev, ...newPreviews]); // Append new images
                 console.log('Updated previewSrc:', previewSrc);
@@ -89,23 +92,54 @@ const AddPost = () => {
             setPreviewSrc([])
         }
     };
-    const handlePost = () => {
-        console.log("Post Caption", caption)
-        console.log("Post attachments", previewSrc.length)
+    const handlePost = async () => {
+        setIsLoading(true)
+
+        const formData = new FormData();
+        formData.append('caption', caption);
+
+        for (let i = 0; i < images.length; i++) {
+            formData.append('images', images[i])
+        }
+
+        try {
+            const data = await fetch('${process.env.NEXT_PUBLIC_API_URL}/post/add-post', {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
+                },
+                body: formData
+            }).then(res => res.json())
+
+            if (data.success) {
+                setIsAlert(true)
+                setAlertType("success")
+                setAlertMsg(data.message)
+            }
+            else {
+                setIsAlert(true)
+                setAlertType("error")
+                setAlertMsg(data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
         <>
             <div
-                className='flex items-center justify-center bg-card text-card-foreground rounded-xl w-full max-w-[40rem] border-2 border-border p-4'
+                className='flex items-center justify-center bg-card text-card-foreground rounded-xl w-64 md:w-[40rem] border-2 border-border p-4'
                 onClick={() => setOpenModal(!openModal)}
             >
                 <div className='flex items-center justify-center gap-x-4 mx-auto max-w-[80%] lg:w-full'>
                     <Avatar>
-                        <AvatarImage src="https://github.com/zohaibsaeed117.png" />
-                        <AvatarFallback>ZS</AvatarFallback>
+                        <AvatarImage src={user?.avatar} />
+                        <AvatarFallback>{user?.firstName[0] + " " + user?.lastName[0]}</AvatarFallback>
                     </Avatar>
-                    <div className='flex h-10 w-full rounded-md text-muted-foreground border border-input bg-background px-3 py-2 text-sm ring-offset-background'>
+                    <div className='flex h-10 w-full rounded-md text-muted-foreground border border-input bg-background px-3 py-2 text-sm ring-offset-background overflow-hidden'>
                         What's on your mind
                     </div>
                 </div>
@@ -121,11 +155,11 @@ const AddPost = () => {
                     >
                         <div className='flex items-start justify-normal gap-x-2 w-[30rem]'>
                             <Avatar>
-                                <AvatarImage src="https://github.com/zohaibsaeed117.png" />
-                                <AvatarFallback>ZS</AvatarFallback>
+                                <AvatarImage src={user?.avatar} />
+                                <AvatarFallback>{user?.firstName[0] + " " + user?.lastName[0]}</AvatarFallback>
                             </Avatar>
                             <div className='w-full'>
-                                <h1 className='text-base font-semibold'>itz_zaibi_17</h1>
+                                <h1 className='text-base font-semibold'>{user.username}</h1>
                                 <textarea
                                     ref={textareaRef}
                                     value={caption}
@@ -146,7 +180,7 @@ const AddPost = () => {
                                     <Splide className='max-h-96 max-w-96 mx-auto overflow-hidden'>
                                         {previewSrc.map((img, index) => (
                                             <SplideSlide key={index}>
-                                                <Image height={512} width={512} src={img} alt={`Image ${index}`} className='object-contain  object-center' />
+                                                <Image height={512} width={512} src={img} alt={`Image ${index}`} className='object-contain object-center' />
                                             </SplideSlide>
                                         ))}
                                     </Splide>
@@ -165,7 +199,7 @@ const AddPost = () => {
                                 multiple
                                 onChange={handleFileChange} // Handle file selection
                             />
-                            <Button>Post</Button>
+                            <Button onClick={handlePost}>Post</Button>
                         </div>
                     </div>
                 </div>

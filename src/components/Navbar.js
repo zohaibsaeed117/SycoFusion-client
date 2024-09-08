@@ -5,59 +5,48 @@ import Image from "next/image";
 import { useUserStore } from "../store/store";
 import { ToastContainer, toast } from "react-toastify";
 import { FaCirclePlus } from "react-icons/fa6";
-var jwt = require("jsonwebtoken");
 import "react-toastify/dist/ReactToastify.css";
-import { Menu, SeparatorHorizontal } from "lucide-react";
+import { Menu, Router, SeparatorHorizontal } from "lucide-react";
 import { Button } from "./ui/button";
 import ResponsiveNavDrawer from "./ResponsiveNavDrawer";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AvatarDropDown } from "./AvatarDropDown";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
+  const router = useRouter()
   const {
     isAlert,
     alertMsg,
     alertType,
     setIsAlert,
     setAlertMsg,
-    Username,
     setAlertType,
     setIsLogin,
     isLogin,
-    setUsername,
-    setFirstName,
-    setLastName,
-    setAvatar,
-    setUserId,
-    UserId
+    user,
+    setUser,
   } = useUserStore();
 
   const [isOpen, setIsOpen] = useState(false)
 
   const tokenVerification = async () => {
-    let key = process.env.NEXT_PUBLIC_JWT_TOKEN;
-
     var token = localStorage.getItem("sycofusion_token");
-    if (token != null) {
-      var verification = await jwt.decode(token, key);
+    var user = JSON.parse(localStorage.getItem("sycofusion_user"));
+    console.log("User set", user)
+    if (token || user) {
+      setUser(user);
+      setIsLogin(true)
+    }
+    else {
+      router.push('login')
 
-      if (verification != null) {
-        setIsLogin(true);
-        setUsername(verification.username);
-        setFirstName(verification.firstName);
-        setLastName(verification.lastName);
-        setAvatar(verification.avatar);
-        setUserId(verification.userId)
-      }
     }
   };
 
   const logout = () => {
     localStorage.removeItem("sycofusion_token");
     setIsLogin(false);
-    setUsername("");
-    setFirstName("");
-    setLastName("");
-    setAvatar("");
+    setUser({})
     setIsAlert(true);
     setAlertMsg("Logged out successfully.");
     setAlertType("success");
@@ -128,7 +117,7 @@ const Navbar = () => {
             {
               isLogin
                 ? <>
-                  <AvatarDropDown logout={logout} userName={Username} />
+                  <AvatarDropDown logout={logout} userName={user?.username} />
                 </> :
                 <div className="flex gap-x-4">
                   <Button asChild><Link href="/login">Login</Link></Button>
@@ -136,51 +125,6 @@ const Navbar = () => {
                 </div>
             }
           </div>
-          {/* <div className='flex items-center justify-center gap-x-2 mx-2'>
-            {isLogin ? (
-              <>
-                <Link href={"/posts/add-post"}><FaCirclePlus className="icon mx-5 text-4xl text-red-500" /></Link>
-                <div className="dropdown dropdown-end">
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className="btn btn-ghost btn-circle avatar"
-                  >
-                    <div className="w-10 rounded-full">
-                      <img src={`https://ui-avatars.com/api/?name=${Username}`} alt="profilepic" className=' h-12 w-12 object-cover rounded-full border border-red-800' />
-
-                    </div>
-                  </div>
-                  <ul
-                    tabIndex={0}
-                    className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-                  >
-                    <li>
-                      <a className="justify-between">Welcome, {Username}</a>
-                    </li>
-                    <li>
-                      <Link href={`/profile/${Username}`}>My Profile</Link>
-                    </li>
-                    <li>
-                      <Link href={`/profile/settings`}>Settings</Link>
-                    </li>
-                    <li>
-                      <a onClick={logout}>Logout</a>
-                    </li>
-                  </ul>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link href={"/login"} className="btn btn-primary">
-                  Login
-                </Link>
-                <Link href={"/signup"} className="mx-2 btn btn-primary">
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div> */}
         </nav>
         <div className='lg:hidden'>
           <Button asChild variant="ghost" size="icon" className='m-4 block lg:hidden' onClick={() => setIsOpen(!isOpen)}>

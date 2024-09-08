@@ -20,11 +20,18 @@ export default function () {
 
   const [loading, setLoading] = useState(false)
 
-  const { setIsAlert, setAlertMsg, setAlertType, setIsLogin, setFirstName, setLastName, setUsername, setAvatar, Username } = useUserStore();
+  const { setIsAlert, setAlertMsg, setAlertType } = useUserStore();
   const createAccount = () => {
+    const regex = /^[a-z0-9_-]+$/;
+    console.log("This is test",!regex.test(user.username));
+    if (regex.test(user.username)) {
+      setAlertType("Error")
+      setAlertMsg("Username must be lowercase, contain no spaces or emojis, and may include letters, numbers, underscores, and hyphens.")
+      setIsAlert(true)
+    }
     setLoading(true)
-
-    fetch(`http://localhost:8080/signup`, {
+    console.log("Hello")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

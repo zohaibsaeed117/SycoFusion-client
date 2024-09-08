@@ -1,63 +1,47 @@
 "use client";
 import AddPost from '@/components/AddPost';
 import Post from '@/components/Post'
-import Image from 'next/image'
+import PostSkelton from '@/components/PostSkelton';
 import Link from 'next/link';
 import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isNewLoading, setIsNewLoading] = useState(true);
 
-  const [totalPosts, setTotalPosts] = useState(0);
-  const [currentPosts, setCurrentPosts] = useState(0);
-  const [allPosts, setAllPosts] = useState([]);
+  const [posts, setPosts] = useState([])
   const [isMore, setIsMore] = useState(true)
   const [page, setPage] = useState(1)
 
 
 
   const fetchProjects = async () => {
+
     setIsLoading(true)
-
-
-    await fetch(`/api/posts/feed-posts-infinite`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ page: page })
-    })
-      .then(res => res.json())
-      .then(data => {
-        setTotalPosts(data.allPostsLength)
-        let len = (data.posts).length;
-        setCurrentPosts(currentPosts + len)
-
-
-        setAllPosts((prevPosts) => [...prevPosts, ...data.posts])
-
-        if (allPosts.length == totalPosts) {
-          setIsMore(false)
+    try {
+      const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/get-post-feed?page=${page}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
         }
-        else {
-          setIsMore(true)
-        }
+      }).then(res => res.json())
+      console.log("This is data", data)
+      if (data.morePosts) {
+        setPosts(post => [...post, ...data.posts])
+        setIsMore(data.morePosts)
         setPage(page + 1);
+      }
+      else {
+        setIsMore(data.morePosts)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
 
-        setIsLoading(false)
-
-      })
 
 
-
-  }
-
-  const getProjects = async () => {
-    const res = await fetch('/api/projects/get-projects')
-    const { projects } = await res.json()
-    setProjects(projects);
-    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -67,21 +51,30 @@ export default function Home() {
   return (
     <>
       {/* <div className='flex justify-center items-center'>
-      <Link href={"/posts"} className='btn btn-primary mx-2'>For You</Link>
-      <Link href={"/posts/following"} className='btn btn-secondary'> Following</Link>
+        <Link href={"/posts"} className='btn btn-primary mx-2'>For You</Link>
+        <Link href={"/posts/following"} className='btn btn-secondary'> Following</Link>
 
       </div> */}
-      <div className="flex min-h-screen flex-col items-center justify-center gap-y-4 mt-4">
+      <div className="flex min-h-screen flex-col items-center justify-normal gap-y-4 mt-4">
         <AddPost />
 
-        <div className='flex justify-center items-center flex-col'>
-          {
-            allPosts.map((project, index) => {
-              return <Post key={project._id + index} postId={project._id} createdAt={project.createdAt} username={project.username} caption={project.caption} likes={project.likes} postType={project.postType} attachments={project.attachments} />
+        {
+          isLoading ?
+            <>
+              <PostSkelton />
+              <PostSkelton />
+              <PostSkelton />
+              <PostSkelton />
+            </>
+            : <div className='flex justify-center items-center flex-col gap-y-4'>
+              {
+                posts?.map((project, index) => {
+                  return <Post key={project?._id + index} postId={project?._id} createdAt={project?.createdAt} username={project?.author?.username} caption={project?.caption} likes={project?.likes} postType={project?.postType} attachments={project?.attachments} postIsLiked={project.isLiked} comments={project?.comments} author={project?.author} />
 
-            })
-          }
-        </div>
+                })
+              }
+            </div>
+        }
 
         {
           isLoading ? (
@@ -89,7 +82,7 @@ export default function Home() {
           ) : null
         }
         {
-          isLoading == false && isMore ? (
+          !isLoading && isMore ? (
             <div className='flex justify-center items-center'>
               <button className='my-10 btn redBtn btn-primary' onClick={fetchProjects}>Load More...</button>
             </div>
@@ -99,7 +92,7 @@ export default function Home() {
 
 
         {
-          isLoading == false && isMore == false ? (
+          !isLoading && !isMore ? (
             <h1 className='my-10 text-center font-bold'>You have seen all posts 👏</h1>
           ) : null
         }
