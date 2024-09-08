@@ -22,6 +22,7 @@ const Post = ({ postId, createdAt, comments, username, caption, likes, postIsLik
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/like`, {
                 method: "POST",
+                mode: 'no-cors',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`,
                     'Content-Type': "application/json",
@@ -50,6 +51,7 @@ const Post = ({ postId, createdAt, comments, username, caption, likes, postIsLik
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/add-comment`, {
                 method: "POST",
+                mode: 'no-cors',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("sycofusion_token")}`,
                     'Content-Type': 'application/json'

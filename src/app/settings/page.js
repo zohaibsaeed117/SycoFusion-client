@@ -23,7 +23,8 @@ export default function Home() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
-        }
+        },
+        mode: 'no-cors',
       }).then(res => res.json())
 
       if (response.success) {
@@ -48,6 +49,7 @@ export default function Home() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/edit-profile`, {
         method: "PUT",
+        mode: 'no-cors',
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`

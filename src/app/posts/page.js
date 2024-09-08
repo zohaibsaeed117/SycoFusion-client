@@ -20,6 +20,7 @@ export default function Home() {
     try {
       const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/get-post-feed?page=${page}`, {
         method: "GET",
+        mode: 'no-cors',
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`

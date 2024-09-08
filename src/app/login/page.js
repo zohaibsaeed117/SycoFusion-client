@@ -30,6 +30,7 @@ export default function () {
     }
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
       method: "POST",
+      mode: 'no-cors',
       headers: {
         "Content-Type": "application/json",
       },

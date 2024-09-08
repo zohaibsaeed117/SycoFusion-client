@@ -39,6 +39,7 @@ function NewPost() {
       }
       fetch(`/api/posts/new-post`, {
         method: "POST",
+        mode: 'no-cors',
         headers: {
           "Content-Type": "application/json",
         },

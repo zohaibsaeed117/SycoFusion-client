@@ -65,6 +65,7 @@ const CoverModal = () => {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
                 },
+                mode: 'no-cors',
                 method: "POST",
                 body: formData
             }).then(res => res.json());

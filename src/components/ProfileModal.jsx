@@ -66,6 +66,7 @@ const ProfileModal = () => {
                     "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
                 },
                 method: "POST",
+                mode: 'no-cors',
                 body: formData
             }).then(res => res.json());
 

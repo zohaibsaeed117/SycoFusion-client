@@ -22,6 +22,7 @@ export default function Home() {
 
     await fetch(`/api/posts/feed-posts-infinite`,{
       method: "POST",
+      mode: 'no-cors',
       headers: {
         "Content-Type": "application/json",
       },

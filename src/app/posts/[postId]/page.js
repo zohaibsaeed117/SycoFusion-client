@@ -26,6 +26,7 @@ export default function Home({ params }) {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/${postId}`, {
         method: "GET",
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
@@ -59,6 +60,7 @@ export default function Home({ params }) {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/like`, {
         method: "POST",
+        mode: 'no-cors',
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`,
           'Content-Type': "application/json",
@@ -86,6 +88,7 @@ export default function Home({ params }) {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/add-comment`, {
         method: "POST",
+        mode: 'no-cors',
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("sycofusion_token")}`,
           'Content-Type': 'application/json'

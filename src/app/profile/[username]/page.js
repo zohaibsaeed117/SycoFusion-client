@@ -26,6 +26,7 @@ function page({ params }) {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${username}`,
         {
           method: "GET",
+          mode: 'no-cors',
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem('sycofusion_token')}`
