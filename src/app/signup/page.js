@@ -31,6 +31,7 @@ export default function () {
     }
     setLoading(true)
     try {
+      console.log(`${process.env.NEXT_PUBLIC_API_URL}/signup`);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
         method: "PUT",
         headers: {
