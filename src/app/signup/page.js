@@ -34,6 +34,7 @@ export default function () {
       console.log(`${process.env.NEXT_PUBLIC_API_URL}/signup`);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
         method: "PUT",
+        mode: 'no-cors',
         headers: {
           "Content-Type": "application/json",
         },
