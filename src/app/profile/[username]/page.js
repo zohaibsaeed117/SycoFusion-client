@@ -9,6 +9,7 @@ import Loader from "@/components/Loader"
 import { useUserStore } from '@/store/store'
 import ProfileModal from '@/components/ProfileModal'
 import Link from 'next/link'
+import CoverModal from '@/components/CoverModal'
 function page({ params }) {
   const { username } = params
 
@@ -71,7 +72,10 @@ function page({ params }) {
       {isLoading ? <Loader /> :
         <div className='min-h-[90vh]'>
           <div className='w-full md:w-[80vw] border mx-auto rounded-3xl'>
-            <Image src="/cover.png" alt="Zohaib Saeed Cover Photo" height={400} width={1584} className='w-full object-contain object-center bg-accent max-h-60' />
+            <div className='relative'>
+              <Image src={user?.cover || "/no-img.png"} alt={`${username}'s Cover Picture`} height={400} width={1584} className='w-full object-contain object-center bg-accent max-h-60 ' />
+              {isOurProfile && <CoverModal />}
+            </div>
             <div className='flex items-center justify-between flex-col md:flex-row gap-y-4'>
               <div className='flex items-start md:ml-10 justify-center flex-col'>
                 <Avatar className="relative z-0 h-28 w-28 md:h-40 md:w-40 md:-mt-20 -mt-10 border-4 border-background overflow-visible">

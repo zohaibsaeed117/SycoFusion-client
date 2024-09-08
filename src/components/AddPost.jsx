@@ -137,8 +137,8 @@ const AddPost = () => {
                 <div className='flex items-center justify-center gap-x-4 mx-auto max-w-[80%] lg:w-full'>
                     <Avatar>
                         <AvatarImage src={user?.avatar} />
-                        <AvatarFallback>{user?.firstName[0] + " " + user?.lastName[0]}</AvatarFallback>
-                    </Avatar>
+                        <AvatarFallback>{user.firstname?(user?.firstName[0] + " " + user?.lastName[0]):"AZ"}</AvatarFallback>
+                        </Avatar>
                     <div className='flex h-10 w-full rounded-md text-muted-foreground border border-input bg-background px-3 py-2 text-sm ring-offset-background overflow-hidden'>
                         What's on your mind
                     </div>
@@ -156,7 +156,7 @@ const AddPost = () => {
                         <div className='flex items-start justify-normal gap-x-2 w-[30rem]'>
                             <Avatar>
                                 <AvatarImage src={user?.avatar} />
-                                <AvatarFallback>{user?.firstName[0] + " " + user?.lastName[0]}</AvatarFallback>
+                                <AvatarFallback>{user.firstname?(user?.firstName[0] + " " + user?.lastName[0]):"AZ"}</AvatarFallback>
                             </Avatar>
                             <div className='w-full'>
                                 <h1 className='text-base font-semibold'>{user.username}</h1>

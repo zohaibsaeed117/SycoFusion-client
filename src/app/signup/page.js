@@ -30,24 +30,32 @@ export default function () {
       setIsAlert(true)
     }
     setLoading(true)
-    console.log("Hello")
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .then(data => {
-        setAlertMsg(data.message);
-        setIsAlert(true);
-        setAlertType(data.type);
-        if (data.type == "success") {
-          router.push("/login");
-        }
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user)
       })
-    setLoading(false)
+        .then(res => res.json())
+
+
+      if (response.success) {
+        setAlertType("success")
+        setAlertMsg("Account created successfully!")
+        setIsAlert(true)
+        router.push("/login")
+      }
+    } catch (error) {
+      setAlertType("error")
+      setAlertMsg(error.message)
+      setIsAlert(true)
+    }
+    finally {
+      setLoading(false)
+    }
+
   }
 
   const [user, setUser] = useState({

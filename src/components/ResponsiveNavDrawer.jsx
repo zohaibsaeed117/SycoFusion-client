@@ -41,7 +41,7 @@ const ResponsiveNavDrawer = ({ isOpen, setIsOpen }) => {
                 (<div className='flex flex-col items-center justify-center mt-8 gap-y-4'>
                     <Avatar>
                         <AvatarImage src={user?.avatar} />
-                        <AvatarFallback>{user ? (user.firstName[0] + user.lastName[0]) : 'AZ'}</AvatarFallback>
+                        <AvatarFallback>{user.firstName ? (user.firstName[0] + user.lastName[0]) : 'AZ'}</AvatarFallback>
                     </Avatar>
                     <div>
                         Zohaib Saeed
