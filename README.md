@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SycoFusion - Social Media Platform
 
-## Getting Started
+Welcome to **SycoFusion**, a social media platform where users can upload posts, like, and comment on them. This repository contains the frontend of the SycoFusion platform, built using Next.js. The backend is built using Express.js, with Firebase for storage and MongoDB as the database.
 
-First, run the development server:
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Backend Repository](#backend-repository)
+- [Contributing](#contributing)
+- [Contact](#contact)
+
+## Project Overview
+
+SycoFusion is a modern social media platform designed to allow users to share their thoughts and interact with others. Users can upload posts with images or text, like posts from others, and engage in discussions through comments.
+
+## Features
+
+- **User Authentication:** Sign up and log in to access the platform.
+- **Post Creation:** Upload text and image posts.
+- **Like and Comment:** Interact with posts by liking them and leaving comments.
+- **Responsive Design:** Works seamlessly across different devices.
+
+## Technologies Used
+
+### Frontend
+
+- **Next.js:** React framework for building server-side rendered applications.
+- **Tailwind CSS:** For styling.
+- **ShadCN UI:** For UI components.
+- **Firebase Storage:** For storing and retrieving post images.
+
+### Backend
+
+- **Express.js:** Web framework for Node.js, handling API requests.
+- **MongoDB:** NoSQL database for storing user data, posts, likes, and comments.
+- **Firebase Storage:** For securely storing and serving user-uploaded images.
+
+## Installation
+
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm (v6 or later) or Yarn
+- MongoDB Atlas or a local MongoDB instance
+- Firebase account
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/your-username/sycofusion-client.git
+cd sycofusion-client
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+or
+
+```bash
+yarn install
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory of the project and add your environment variables as shown in the `.env.example` file. This should include Firebase credentials, MongoDB connection string, and any API keys.
+
+### Running the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+or
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The development server will be available at `http://localhost:3000`.
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+- **Sign up** for an account or **log in** with an existing account.
+- **Upload posts** by clicking on the "Create Post" button.
+- **Like** posts and **leave comments** to interact with other users.
+- **Explore** the platform to view posts from different users.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Backend Repository
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The backend API for SycoFusion is hosted in a separate repository. You can find it [here](https://github.com/zohaibsaeed117/SycoFusion-server).
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! If you'd like to contribute to SycoFusion, please follow these steps:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature-name`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/your-feature-name`).
+5. Open a Pull Request.
+
+
+## Contact
+
+For any inquiries or support, please contact the project maintainer:
+
+- **Zohaib Saeed**
+- Email: [zohaib.saeed1259@gmail.com](mailto:zohaib.saeed1259@gmail.com)
+
+---
+
+This README provides an overview of the SycoFusion project, how to set it up, and links to the backend repository. Make sure to update the links and contact information with your actual details.
